@@ -12,9 +12,7 @@ export default [
   eslint.configs.recommended,
   ...vue.configs['flat/recommended'],
   {
-    plugins: {
-      stylistic
-    },
+    plugins: {stylistic},
     rules: {
       'no-var': ['error'],
 
@@ -27,9 +25,7 @@ export default [
       }],
       'stylistic/block-spacing': ['error', 'never'],
       'stylistic/comma-dangle': ['error', 'never'],
-      'stylistic/brace-style': ['error', '1tbs', {
-        allowSingleLine: false
-      }],
+      'stylistic/brace-style': ['error', '1tbs', {allowSingleLine: false}],
       'stylistic/comma-spacing': ['error', {
         before: false,
         after: true
@@ -39,9 +35,7 @@ export default [
       'stylistic/dot-location': ['error', 'property'],
       'stylistic/eol-last': ['error', 'never'],
       'stylistic/function-call-spacing': ['error', 'never'],
-      'stylistic/indent': ['error', 2, {
-        SwitchCase: 1
-      }],
+      'stylistic/indent': ['error', 2, {SwitchCase: 1}],
       'stylistic/key-spacing': ['error', {
         afterColon: true,
         beforeColon: false,
@@ -79,11 +73,11 @@ export default [
       'stylistic/no-trailing-spaces': ['error'],
       'stylistic/object-curly-spacing': ['error', 'never'],
       'stylistic/no-whitespace-before-property': ['error'],
-      'stylistic/nonblock-statement-body-position': ['error', 'beside'],
+      'stylistic/nonblock-statement-body-position': ['error', 'below'],
       'stylistic/object-curly-newline': ['error', {
         ObjectExpression: {
           multiline: true,
-          minProperties: 1
+          minProperties: 2
         },
         ObjectPattern: {
           multiline: true,
@@ -91,7 +85,7 @@ export default [
         },
         ImportDeclaration: {
           multiline: true,
-          minProperties: 2
+          minProperties: 3
         },
         ExportDeclaration: {
           multiline: true,
@@ -101,9 +95,7 @@ export default [
       'stylistic/quote-props': ['error', 'consistent-as-needed'],
       'stylistic/rest-spread-spacing': ['error', 'never'],
       'stylistic/semi': ['error', 'always'],
-      'stylistic/semi-spacing': ['error', {
-        before: false
-      }],
+      'stylistic/semi-spacing': ['error', {before: false}],
       'stylistic/semi-style': ['error', 'last'],
       'stylistic/space-before-blocks': ['error', 'always'],
       'stylistic/space-before-function-paren': ['error', {
@@ -128,7 +120,9 @@ export default [
   {
     languageOptions: {
       globals: {
-        document: 'readonly'
+        document: 'readonly',
+        localStorage: 'readonly',
+        console: 'readonly'
       }
     }
   }
