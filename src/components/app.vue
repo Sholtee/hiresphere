@@ -21,3 +21,5 @@ export default {
   }
 };
 </script>
+
+<style src="@/styles/vars.sass" lang="sass" />
