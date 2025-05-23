@@ -15,7 +15,7 @@
       .title.has-icon(v-once) Profession portal
       router-link.nav.has-icon(
         v-for="{name, title, icon} in routes"
-        :class="{selected: currentRoute.name === name}"
+        :class="{selected: $router.currentRoute.value.name === name}"
         :to="{name}"
         :icon="icon"
       ) {{title}}
@@ -31,16 +31,13 @@ export default {
     return {menuVisible: false};
   },
   computed: {
-    currentRoute() {
-      return this.$router.currentRoute.value;
-    },
     routes() {
-      const loggedInUser = !!this.currentUser.roles.length;
-
       return this
         .$router
         .getRoutes()
-        .filter(({meta: {nav, guestOnly}}) => !!nav || (guestOnly && loggedInUser))
+        .filter(({meta: {nav, requiredRoles}}) =>
+          // if requiredRoles is null the every user can visit the view
+          nav && requiredRoles?.some(role => this.currentUser.roles.includes(role)) !== false)
         .map(({name, meta: {nav: {title, icon}}}) => ({
           name,
           title,

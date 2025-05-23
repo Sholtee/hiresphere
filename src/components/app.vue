@@ -26,7 +26,7 @@ export default {
     $route(to) {
       if (to.path === '/')
         // if the user is logged in go to the editor else show the welcome screen
-        this.$router.push({name: this.currentUser.roles.length ? 'Jobs' : 'Welcome'});
+        this.$router.push({name: this.currentUser.roles.length ? 'ListJobs' : 'Welcome'});
     }
   }
 };
