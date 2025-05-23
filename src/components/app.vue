@@ -22,4 +22,6 @@ export default {
 };
 </script>
 
+<style src="@/styles/document.sass" lang="sass" />
+<style src="@/styles/fonts.sass" lang="sass" />
 <style src="@/styles/vars.sass" lang="sass" />
