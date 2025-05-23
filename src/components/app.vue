@@ -10,18 +10,26 @@ router-view
 </template>
 
 <script>
+import {computed} from 'vue';
+
 export default {
   name: 'App',
+  provide() {
+    return {currentUser: computed(() => this.currentUser)};
+  },
+  computed: {
+    currentUser() {
+      return this.$router.currentRoute.value.meta.user;
+    }
+  },
   watch: {
     $route(to) {
       if (to.path === '/')
         // if the user is logged in go to the editor else show the welcome screen
-        this.$router.push({name: this.$router.currentRoute.value.meta.user.roles.length ? 'Jobs' : 'Welcome'});
+        this.$router.push({name: this.currentUser.roles.length ? 'Jobs' : 'Welcome'});
     }
   }
 };
 </script>
 
-<style src="@/styles/document.sass" lang="sass" />
-<style src="@/styles/fonts.sass" lang="sass" />
-<style src="@/styles/vars.sass" lang="sass" />
+<style src="@/styles/app.sass" lang="sass" />

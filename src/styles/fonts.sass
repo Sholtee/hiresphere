@@ -4,5 +4,7 @@
 //
 // Author: Denes Solti
 //*********************************
-@import "~/material-design-icons-iconfont/dist/material-design-icons.css"
-@import "~/roboto-fontface/css/roboto/roboto-fontface.css"
+@use "sass:meta" as *
+
+@include load-css("~/material-design-icons-iconfont/dist/material-design-icons.css")
+@include load-css("~/roboto-fontface/css/roboto/roboto-fontface.css")

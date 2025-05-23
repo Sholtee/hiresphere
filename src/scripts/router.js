@@ -16,13 +16,25 @@ const routes = [
         path: '/welcome',
         name: 'Welcome',
         component: () => import('@/components/views/welcome.vue'),
-        meta: {guestOnly: true}
+        meta: {
+          guestOnly: true,
+          nav: {
+            title: 'Home',
+            icon: 'home'
+          }
+        }
       },
       {
         path: '/jobs',
         name: 'ListJobs',
-        component: () => import('@/components/views/jobs.vue')
-        // both guests and job posters are allowed to visit
+        component: () => import('@/components/views/jobs.vue'),
+        meta: {
+          nav: {
+            title: 'Jobs',
+            icon: 'work'
+          }
+          // both guests and job posters are allowed to visit
+        }
       },
       {
         path: '/edit/:jobId',

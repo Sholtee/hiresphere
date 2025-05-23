@@ -1,0 +1,25 @@
+//*********************************
+// File: icon.sass
+// Project: job-ad
+//
+// Author: Denes Solti
+//*********************************
+.has-icon
+  display: flex
+  align-items: center
+
+  =icon
+    font-family: "Material Icons"
+    font-size: 100%
+    font-weight: normal
+    color: inherit
+    letter-spacing: normal
+    content: attr(icon)
+
+  &:not(.right):before
+    +icon
+    margin-right: var(--margin-small)
+
+  &.right:after
+    +icon
+    margin-left: var(--margin-small)
