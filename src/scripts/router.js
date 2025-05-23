@@ -1,3 +1,9 @@
+/*
+ * File: router.js
+ * Project: job-ad
+ *
+ * Author: Denes Solti
+ */
 import {createRouter, createWebHistory} from 'vue-router';
 
 const routes = [
