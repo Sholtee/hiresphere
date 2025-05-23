@@ -7,7 +7,8 @@
     "url": "https://github.com/Sholtee/job-ad"
   },
   "dependencies": {
-    "vue": "^3.5.14"
+    "vue": "^3.5.14",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",

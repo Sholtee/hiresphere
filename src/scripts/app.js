@@ -5,10 +5,13 @@
  * Author: Denes Solti
  */
 import {createApp} from 'vue';
+
 import icon from '@/assets/favicon.png';
 import App from '@/components/app.vue';
+import router from "@/scripts/router.js";
 
 document.querySelector('link[rel="icon"]').href = icon;
 
-const app = createApp(App);
-app.mount('#app');
+createApp(App)
+  .use(router)
+  .mount('#app');
