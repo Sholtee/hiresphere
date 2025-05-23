@@ -16,13 +16,25 @@ const routes = [
         path: '/welcome',
         name: 'Welcome',
         component: () => import('@/components/views/welcome.vue'),
-        meta: {guestOnly: true}
+        meta: {
+          requiredRoles: ['guest'],
+          nav: {
+            title: 'Home',
+            icon: 'home'
+          }
+        }
       },
       {
         path: '/jobs',
         name: 'ListJobs',
-        component: () => import('@/components/views/jobs.vue')
-        // both guests and job posters are allowed to visit
+        component: () => import('@/components/views/jobs.vue'),
+        meta: {
+          nav: {
+            title: 'Jobs',
+            icon: 'work'
+          }
+          // both guests and job posters are allowed to visit
+        }
       },
       {
         path: '/edit/:jobId',
@@ -36,7 +48,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/components/views/login.vue'),
-    meta: {guestOnly: true}
+    meta: {requiredRoles: ['guest']}
   },
   {
     path: '/:pathMatch(.*)*',
@@ -52,15 +64,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let user = localStorage.getItem('user');
-  user = user ? JSON.parse(user) : {roles: []};
+  user = user ? JSON.parse(user) : {roles: ['guest']};
 
   to.meta.user = user;
 
-  if (to.meta.guestOnly && user.roles.length)
-    return next('/');
-
+  // if no "requiredRoles" is defined then every user allowed to visit the route
   if (to.meta.requiredRoles?.some(role => user.roles.includes(role)) === false)
-    return next(`/login?redirectTo=${from.fullPath}`);
+    return next({name: 'NotFound'});
 
   next();
 });

@@ -1,0 +1,15 @@
+//*********************************
+// File: mixins.sass
+// Project: job-ad
+//
+// Author: Denes Solti
+//*********************************
+=bg-transition($from, $to)
+  background-color: $from
+
+  &:hover:not([disabled])
+    background-color: $to
+
+  &:not(.no-transition)
+    will-change: background-color
+    transition: background-color var(--default-transition-len)
