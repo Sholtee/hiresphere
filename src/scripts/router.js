@@ -18,8 +18,8 @@ const routes = [
         component: () => import('@/components/views/welcome.vue'),
         meta: {
           requiredRoles: ['guest'],
+          titleId: 1,
           nav: {
-            titleId: 1,
             icon: 'home'
           }
         }
@@ -29,8 +29,8 @@ const routes = [
         name: 'ListJobs',
         component: () => import('@/components/views/jobs.vue'),
         meta: {
+          titleId: 2,
           nav: {
-            titleId: 2,
             icon: 'work'
           }
           // both guests and job posters are allowed to visit
@@ -51,7 +51,8 @@ const routes = [
     name: 'Login',
     component: () => import('@/components/views/login.vue'),
     meta: {
-      requiredRoles: ['guest']
+      requiredRoles: ['guest'],
+      titleId: 3
     }
   },
   {

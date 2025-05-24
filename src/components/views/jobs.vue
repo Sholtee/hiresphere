@@ -11,10 +11,7 @@ span Jobs
 
 <script>
 export default {
-  name: 'Jobs',
-  beforeCreate() {
-    console.log(`User is logged in: ${this.$router.currentRoute.value.meta.user.roles}`);
-  }
+  name: 'Jobs'
 };
 </script>
 
