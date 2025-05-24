@@ -127,9 +127,10 @@ export default [
   {
     languageOptions: {
       globals: {
-        alert: 'readonly',
         console: 'readonly',
+        CustomEvent: 'readonly',
         document: 'readonly',
+        EventTarget: 'readonly',
         fetch: 'readonly',
         localStorage: 'readonly',
         URLSearchParams: 'readonly'

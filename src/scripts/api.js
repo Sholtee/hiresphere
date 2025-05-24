@@ -6,43 +6,51 @@
  */
 import apiDefinition from '@/api.json' with {type: 'json'};
 
-export default function Api(loadingCallback, toastService) {
-  Object.entries(apiDefinition).forEach(([key, {method, path}]) => {
-    let impl;
+export default class Api extends EventTarget {
+  constructor() {
+    super();
 
-    switch (method.toUpperCase()) {
-      case 'GET':
-        impl = params => {
-          // path is captured so do not modify it
-          let url = path;
-          if (typeof params === 'object')
-            url += `?${new URLSearchParams(params)}`;
-          return fetchWrapper(url);
-        };
-        break;
-      case 'POST':
-        impl = params => fetchWrapper(path, {
-          method: 'POST',
-          body: JSON.stringify(params)
-        });
-        break;
-      default:
-        throw 'Unsupported method';
-    }
+    Object.entries(apiDefinition).forEach(([key, {method, path}]) => {
+      let impl;
 
-    this[key] = impl;
-  });
+      switch (method.toUpperCase()) {
+        case 'GET':
+          impl = params => {
+            // path is captured so do not modify it
+            let url = path;
+            if (typeof params === 'object')
+              url += `?${new URLSearchParams(params)}`;
+            return this.#fetchWrapper(url);
+          };
+          break;
+        case 'POST':
+          impl = params => this.#fetchWrapper(path, {
+            method: 'POST',
+            body: JSON.stringify(params)
+          });
+          break;
+        default:
+          throw 'Unsupported method';
+      }
 
-  async function fetchWrapper(...args) {
-    loadingCallback(1);
+      this[key] = impl;
+    });
+  }
+
+  async #fetchWrapper(...args) {
+    this.dispatchEvent(new CustomEvent('load', {}));
     try {
       const resp = await fetch(...args);
       return await resp.json();
-    } catch (err) {
-      toastService.error(err.toString());
-      throw err;
+    } catch (error) {
+      this.dispatchEvent(new CustomEvent('error', {
+        detail: {
+          error
+        }
+      }));
+      throw error;
     } finally {
-      loadingCallback(-1);
+      this.dispatchEvent(new CustomEvent('end-load', {}));
     }
   }
 }

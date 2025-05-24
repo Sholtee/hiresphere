@@ -26,10 +26,15 @@ export default {
     Loader
   },
   provide() {
+    const api = new Api();
+    api.addEventListener('load', () => this.loaderVisible++);
+    api.addEventListener('end-load', () => this.loaderVisible--);
+    api.addEventListener('error', ({detail: {error}}) => this.$toast.error(error.toString()));
+
     return {
       currentUser: computed(() => this.currentUser),
       setTitle: title => this.title = title,
-      api: new Api(val => this.loaderVisible += val, this.$toast)
+      api
     };
   },
   data() {
