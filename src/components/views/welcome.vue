@@ -12,7 +12,10 @@ span Welcome
 <script>
 export default {
   name: 'Welcome',
-  components: {}
+  inject: ['api'],
+  async mounted() {
+    console.log(await this.api.healthcheck());
+  }
 };
 </script>
 

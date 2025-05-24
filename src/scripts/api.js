@@ -6,7 +6,7 @@
  */
 import apiDefinition from '@/api.json' with {type: 'json'};
 
-export default function Api(loader) {
+export default function Api(loaderVisible) {
   Object.entries(apiDefinition).forEach(([key, {method, path}]) => {
     let impl;
 
@@ -34,12 +34,15 @@ export default function Api(loader) {
   });
 
   async function fetchWrapper(...args) {
-    // api calls might run parallel
-    loader.enabled++;
+    // api calls might run parallel -> do not use bool
+    loaderVisible.value++;
     try {
-      return await fetch(...args);
+      const resp = await fetch(...args);
+      return await resp.json();
+    } catch (err) {
+      alert(err.toString());
     } finally {
-      loader.enabled--;
+      loaderVisible.value--;
     }
   }
 }
