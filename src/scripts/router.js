@@ -40,7 +40,9 @@ const routes = [
         path: '/edit/:jobId',
         name: 'EditJob',
         component: () => import('@/components/views/edit.vue'),
-        meta: {requiredRoles: ['job-poster']}
+        meta: {
+          requiredRoles: ['job-poster']
+        }
       }
     ]
   },
@@ -48,7 +50,9 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/components/views/login.vue'),
-    meta: {requiredRoles: ['guest']}
+    meta: {
+      requiredRoles: ['guest']
+    }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -64,13 +68,17 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   let user = localStorage.getItem('user');
-  user = user ? JSON.parse(user) : {roles: ['guest']};
+  user = user ? JSON.parse(user) : {
+    roles: ['guest']
+  };
 
   to.meta.user = user;
 
   // if no "requiredRoles" is defined then every user allowed to visit the route
   if (to.meta.requiredRoles?.some(role => user.roles.includes(role)) === false)
-    return next({name: 'NotFound'});
+    return next({
+      name: 'NotFound'
+    });
 
   next();
 });
