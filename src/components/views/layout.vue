@@ -48,9 +48,12 @@ export default {
     }
   },
   watch: {
-    $route({meta: {titleId} = {}}) {
-      const {$resources: {language: {APP_TITLE_SHORT, titles}}} = this;
-      this.setTitle(titleId ? `${APP_TITLE_SHORT} | ${titles[titleId]}` : APP_TITLE_SHORT);
+    $route: {
+      handler({meta: {titleId} = {}}) {
+        const {$resources: {language: {APP_TITLE_SHORT, titles}}} = this;
+        this.setTitle(titleId ? `${APP_TITLE_SHORT} | ${titles[titleId]}` : APP_TITLE_SHORT);
+      },
+      immediate: true
     }
   }
 };
