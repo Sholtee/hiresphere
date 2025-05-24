@@ -14,5 +14,5 @@ import router from "@/scripts/router.js";
 document.querySelector('link[rel="icon"]').href = icon;
 
 const app = createApp(App).use(router);
-app.config.globalProperties.resources = resources;
+app.config.globalProperties.$resources = resources;
 app.mount('#app');

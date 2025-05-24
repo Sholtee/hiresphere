@@ -1,3 +1,10 @@
 {
+  "language": {
+    "nav": {
+      "1": "Home",
+      "2": "Jobs"
+    },
 
+    "APP_TITLE": "Profession portal"
+  }
 }

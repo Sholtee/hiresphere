@@ -19,7 +19,7 @@ const routes = [
         meta: {
           requiredRoles: ['guest'],
           nav: {
-            title: 'Home',
+            titleId: 1,
             icon: 'home'
           }
         }
@@ -30,7 +30,7 @@ const routes = [
         component: () => import('@/components/views/jobs.vue'),
         meta: {
           nav: {
-            title: 'Jobs',
+            titleId: 2,
             icon: 'work'
           }
           // both guests and job posters are allowed to visit
