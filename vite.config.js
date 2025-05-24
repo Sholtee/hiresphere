@@ -21,7 +21,9 @@ export default defineConfig(({mode}) => ({
   ],
   build: {
     sourcemap: mode.includes('production') ? 'inline' : false,
-    target: browserslistToEsbuild(),
+    target: browserslistToEsbuild(null, {
+      path: resolve('.', '.browserslist.rc')
+    }),
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
