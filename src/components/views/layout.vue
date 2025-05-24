@@ -10,15 +10,15 @@
   .click-trap(@click="menuVisible = false")
   .head
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
-    .title(v-once) Profession portal
+    .title(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
-      .title.has-icon(v-once) Profession portal
+      .title.has-icon(v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(
-        v-for="{name, title, icon} in routes"
+        v-for="{name, titleId, icon} in routes"
         :class="{selected: $router.currentRoute.value.name === name}"
         :to="{name}"
         :icon="icon"
-      ) {{title}}
+      ) {{$resources.language.titles[titleId]}}
   .body
     router-view
 </template>
@@ -26,7 +26,7 @@
 <script>
 export default {
   name: 'Layout',
-  inject: ['currentUser'],
+  inject: ['currentUser', 'setTitle'],
   data() {
     return {
       menuVisible: false
@@ -40,11 +40,20 @@ export default {
         .filter(({meta: {nav, requiredRoles}}) =>
           // if requiredRoles is null the every user can visit the view
           nav && requiredRoles?.some(role => this.currentUser.roles.includes(role)) !== false)
-        .map(({name, meta: {nav: {title, icon}}}) => ({
+        .map(({name, meta: {titleId, nav: {icon}}}) => ({
           name,
-          title,
+          titleId,
           icon
         }));
+    }
+  },
+  watch: {
+    $route: {
+      handler({meta: {titleId} = {}}) {
+        const {$resources: {language: {APP_TITLE_SHORT, titles}}} = this;
+        this.setTitle(titleId ? `${APP_TITLE_SHORT} | ${titles[titleId]}` : APP_TITLE_SHORT);
+      },
+      immediate: true
     }
   }
 };

@@ -6,22 +6,36 @@
 -->
 
 <template lang="pug">
+teleport(to="head")
+  title {{title}}
+  link(rel="icon" type="image/png" :href="favIcon")
 router-view
 </template>
 
 <script>
 import {computed} from 'vue';
 
+import icon from '@/assets/favicon.png';
+
 export default {
   name: 'App',
   provide() {
     return {
-      currentUser: computed(() => this.currentUser)
+      currentUser: computed(() => this.currentUser),
+      setTitle: title => this.title = title
+    };
+  },
+  data() {
+    return {
+      title: this.$resources.language.APP_TITLE_SHORT
     };
   },
   computed: {
     currentUser() {
       return this.$router.currentRoute.value.meta.user;
+    },
+    favIcon() {
+      return icon;
     }
   },
   watch: {
