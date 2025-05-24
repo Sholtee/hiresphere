@@ -14,7 +14,7 @@ router-view
 </template>
 
 <script>
-import {computed, toRef} from 'vue';
+import {computed} from 'vue';
 
 import Api from '@/scripts/api.js';
 import icon from '@/assets/favicon.png';
@@ -29,7 +29,7 @@ export default {
     return {
       currentUser: computed(() => this.currentUser),
       setTitle: title => this.title = title,
-      api: new Api(toRef(this, 'loaderVisible'))
+      api: new Api(val => this.loaderVisible += val, this.$toast)
     };
   },
   data() {

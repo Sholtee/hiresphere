@@ -6,7 +6,7 @@
  */
 import apiDefinition from '@/api.json' with {type: 'json'};
 
-export default function Api(loaderVisible) {
+export default function Api(loadingCallback, toastService) {
   Object.entries(apiDefinition).forEach(([key, {method, path}]) => {
     let impl;
 
@@ -34,15 +34,15 @@ export default function Api(loaderVisible) {
   });
 
   async function fetchWrapper(...args) {
-    // api calls might run parallel -> do not use bool
-    loaderVisible.value++;
+    loadingCallback(1);
     try {
       const resp = await fetch(...args);
       return await resp.json();
     } catch (err) {
-      alert(err.toString());
+      toastService.error(err.toString());
+      throw err;
     } finally {
-      loaderVisible.value--;
+      loadingCallback(-1);
     }
   }
 }
