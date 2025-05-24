@@ -28,7 +28,9 @@ export default {
   name: 'Layout',
   inject: ['currentUser'],
   data() {
-    return {menuVisible: false};
+    return {
+      menuVisible: false
+    };
   },
   computed: {
     routes() {

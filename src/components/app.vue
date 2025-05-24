@@ -15,7 +15,9 @@ import {computed} from 'vue';
 export default {
   name: 'App',
   provide() {
-    return {currentUser: computed(() => this.currentUser)};
+    return {
+      currentUser: computed(() => this.currentUser)
+    };
   },
   computed: {
     currentUser() {
@@ -26,7 +28,9 @@ export default {
     $route(to) {
       if (to.path === '/')
         // if the user is logged in go to the editor else show the welcome screen
-        this.$router.push({name: this.currentUser.roles.length ? 'ListJobs' : 'Welcome'});
+        this.$router.push({
+          name: this.currentUser.roles.length ? 'ListJobs' : 'Welcome'
+        });
     }
   }
 };
