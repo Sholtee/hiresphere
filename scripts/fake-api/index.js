@@ -21,7 +21,7 @@ if (!statSync(db.name).size) {
   }));
 }
 
-app.get('/', (req, res) => {
+app.get('/api/v1/', (req, res) => {
   res.setHeader('content-type', 'application/json');
   res.status(200);
   res.send(JSON.stringify('Hello world!'));

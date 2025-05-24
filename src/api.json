@@ -1,0 +1,6 @@
+{
+  "healthcheck": {
+    "method": "GET",
+    "path": "/"
+  }
+}
