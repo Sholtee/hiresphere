@@ -44,7 +44,7 @@ export default {
     &:before, &:after
       position: absolute
       content: ''
-      background-color: var(--loader-color)
+      background-color: rgb(93, 172, 255)
       top: 0
       left: 0
       bottom: 0

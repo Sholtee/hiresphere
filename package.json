@@ -21,6 +21,7 @@
     "eslint-plugin-vue": "^10.1.0",
     "pug": "^3.0.3",
     "sass": "^1.89.0",
+    "start-server-and-test": "^2.0.12",
     "vite": "^6.3.5"
   },
   "engines": {
@@ -29,7 +30,8 @@
   "scripts": {
     "preinstall": "cd \"./scripts/fake-api\" && npm install",
     "fakeapi": "npm --prefix \"./scripts/fake-api\" run start",
-    "serve": "npm run lint && vite",
+    "start-servers": "start-server-and-test fakeapi http://localhost:1986/api/v1/ vite",
+    "serve": "npm run lint & npm run start-servers",
     "build": "npm run lint && vite build",
     "lint": "npx eslint \"./src/**\" --config \"./eslint.config.js\""
   }

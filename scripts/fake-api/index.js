@@ -5,7 +5,7 @@
  * Author: Denes Solti
  */
 import {readFileSync, statSync} from 'node:fs';
-import {createServer} from 'https';
+import {createServer} from 'http';
 
 import Database from 'better-sqlite3';
 import express from 'express';
