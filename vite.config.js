@@ -50,5 +50,13 @@ export default defineConfig(({mode}) => ({
       '~': resolve('.', 'node_modules'),
       '^': resolve('.')
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:1986',
+        changeOrigin: true
+      }
+    }
   }
 }));

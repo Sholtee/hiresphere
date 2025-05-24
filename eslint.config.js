@@ -127,9 +127,13 @@ export default [
   {
     languageOptions: {
       globals: {
+        console: 'readonly',
+        CustomEvent: 'readonly',
         document: 'readonly',
+        EventTarget: 'readonly',
+        fetch: 'readonly',
         localStorage: 'readonly',
-        console: 'readonly'
+        URLSearchParams: 'readonly'
       }
     }
   }
