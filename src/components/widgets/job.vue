@@ -96,9 +96,6 @@ export default {
   box-shadow: var(--default-box-shadow)
   border-radius: var(--border-radius-small)
   padding: var(--padding-normal)
-  margin-left: auto
-  margin-right: auto
-  margin-top: 10rem
   background-color: var(--widget-background-color)
 
   .highlighted

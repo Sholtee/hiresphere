@@ -27,17 +27,19 @@ button
     white-space: nowrap
     color: var(--font-color-highlighted)
     border-radius: var(--border-radius-small)
-    border: 1px solid var(--font-color-disabled)
+    border: 1px solid transparent
 
     &:not([disabled])
       cursor: pointer
 
       &.primary
         color: var(--button-primary-color)
+        border-color: darken(var(--button-primary-background), 90%)
         +bg-transition(var(--button-primary-background), lighten(var(--button-primary-background), 70%))
 
       &.secondary
         color: var(--button-secondary-color)
+        border-color: darken(var(--button-secondary-background), 90%)
         +bg-transition(var(--button-secondary-background), lighten(var(--button-secondary-background), 70%))
 
     &[disabled]

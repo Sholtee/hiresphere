@@ -6,3 +6,6 @@
 //*********************************
 @function lighten($color, $percentage)
   @return color-mix(in srgb, $color $percentage, white)
+
+@function darken($color, $percentage)
+  @return color-mix(in srgb, $color $percentage, black)
