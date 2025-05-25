@@ -8,9 +8,9 @@
 <template lang="pug">
 .jobs
   .search
-    .has-icon(data-icon="domain")
+    .job-search.has-icon(data-icon="domain")
       input(type="text" :placeholder="$resources.language.SEARCH_JOB_OR_COMPANY")
-    .has-icon(data-icon="location_on")
+    .location-search.has-icon(data-icon="location_on")
       input(type="text" :placeholder="$resources.language.SEARCH_LOCATION")
     button.secondary Search
   .job-holder
@@ -67,13 +67,23 @@ export default {
         box-sizing: border-box
         line-height: var(--input-height-mod)
 
+      &.job-search
+        width: 20rem
+
+      &.location-search
+        width: 10rem
+
       > input
         border-bottom-left-radius: 0
         border-top-left-radius: 0
         height: 100%
+        width: 100%
 
     @media (max-width: 50rem)
       flex-flow: column
+
+      > .has-icon
+        width: 20rem !important
 
       > *:not(:last-child)
         margin-right: 0

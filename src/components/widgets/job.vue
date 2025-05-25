@@ -17,9 +17,7 @@
           v-for="[tag, bg] in [\
             ['tag_name_1', '#A8C7FA'],\
             ['tag_name_2', '#000000'],\
-            ['tag_name_3', '#ffffff'],\
-            ['tag_name_4', '#A8C7FA'],\
-            ['tag_name_5', '#A8C7FA'],\
+            ['tag_name_3', '#ffffff'] \
           ]"
           :text="tag"
           :bg="bg"
@@ -89,7 +87,7 @@ export default {
   position: relative
   display: inline-flex
   flex-flow: column
-  width: 50rem
+  width: 60rem
   max-width: 90%
   box-sizing: border-box
   height: max-content
