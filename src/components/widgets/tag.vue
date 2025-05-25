@@ -63,7 +63,7 @@ export default {
     width: var(--tag-pseudo-size)
     height: var(--tag-pseudo-size)
     border-radius: var(--tag-pseudo-size)
-    background: var(--button-primary-color)
+    background-color: var(--widget-background-color)
 
   &:after
     --border-magic: .6rem solid transparent

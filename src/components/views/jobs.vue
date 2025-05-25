@@ -6,7 +6,7 @@
 -->
 
 <template lang="pug">
-job
+job(expanded)
 </template>
 
 <script>

@@ -5,7 +5,7 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-.job
+.job(:class="{expanded}" v-once)
   .head
     .grid
       img(:src="'bad'" @error="$event.target.src = imagePlaceholder")
@@ -14,18 +14,28 @@
       span.company.has-icon(data-icon="domain") Company name
       .tags
         tag(
-          v-for="[tag, bg] in [['tag_name_1', '#A8C7FA'], ['tag_name_2', '#000000'], ['tag_name_3', '#ffffff']]"
+          v-for="[tag, bg] in [\
+            ['tag_name_1', '#A8C7FA'],\
+            ['tag_name_2', '#000000'],\
+            ['tag_name_3', '#ffffff'],\
+            ['tag_name_4', '#A8C7FA'],\
+            ['tag_name_5', '#A8C7FA'],\
+          ]"
           :text="tag"
           :bg="bg"
         )
     span.published.highlighted okt. 26
   .body
-    .short-description.highlighted {{truncate(shortDescription, 35)}}
+    .highlighted(v-if="expanded" v-html="md.render(description)" )
+    .highlighted(v-else) {{truncate(description, 35)}}
   .foot
-    button.primary More details
+    button.primary(@click="console.log('click')" v-if="expanded") Apply for this job
+    button.primary(@click="console.log('click')" v-else) More details
 </template>
 
 <script>
+import mdFactory from 'markdown-it';
+
 import imagePlaceholder from '@/assets/company.png';
 import Tag from '@/components/widgets/tag.vue';
 
@@ -34,20 +44,30 @@ export default {
   components: {
     Tag
   },
-  props: {},
+  props: {
+    expanded: {
+      type: Boolean
+    }
+  },
   setup() {
     return {
-      imagePlaceholder
+      imagePlaceholder,
+      md: mdFactory({
+        // disable HTL tags in the input
+        html: false,
+        breaks: true
+      })
     };
   },
   data() {
     return {
-      expanded: false,
-      shortDescription: `
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc augue ex, fringilla ut dignissim sit amet,
-        ullamcorper a urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-        egestas. Morbi ut purus tristique, porta libero a, mattis nisi.
-      `
+      description: '# Title\n' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc augue ex, fringilla ut dignissim sit amet, ' +
+        'ullamcorper a urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis ' +
+        'egestas. Morbi ut purus tristique, porta libero a, mattis nisi.\n' +
+        '- list item 1\n' +
+        '- list item 2\n' +
+        '- list item 3'
     };
   },
   methods: {
@@ -127,6 +147,7 @@ export default {
       > .tags
         grid-row: 4
         display: flex
+        overflow-y: auto
 
         > .tag
           margin-top: auto
@@ -148,4 +169,18 @@ export default {
 
     > button:first-of-type
       margin-left: auto
+
+  &.expanded
+    background-color: transparent
+    box-shadow: unset
+    padding: unset
+
+    > .body
+      box-shadow: var(--default-box-shadow)
+      border-radius: var(--border-radius-small)
+      padding: var(--padding-normal)
+
+      > .highlighted
+        ::v-deep(h1)
+          font-size: 1.5em
 </style>
