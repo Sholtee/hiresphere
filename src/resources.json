@@ -6,6 +6,8 @@
     },
 
     "APP_TITLE": "Profession portal",
-    "APP_TITLE_SHORT": "Profession"
+    "APP_TITLE_SHORT": "Profession",
+    "SEARCH_JOB_OR_COMPANY": "Job or company...",
+    "SEARCH_LOCATION": "Location..."
   }
 }

@@ -4,6 +4,7 @@
 //
 // Author: Denes Solti
 //*********************************
+@use "functions" as *
 @use "mixins" as *
 
 button
@@ -25,10 +26,21 @@ button
     line-height: 1
     white-space: nowrap
     color: var(--font-color-highlighted)
+    border-radius: var(--border-radius-small)
+    border: 1px solid transparent
 
     &:not([disabled])
       cursor: pointer
-      +bg-transition(transparent, var(--button-active))
+
+      &.primary
+        color: var(--button-primary-color)
+        border-color: darken(var(--button-primary-background), 90%)
+        +bg-transition(var(--button-primary-background), lighten(var(--button-primary-background), 70%))
+
+      &.secondary
+        color: var(--button-secondary-color)
+        border-color: darken(var(--button-secondary-background), 90%)
+        +bg-transition(var(--button-secondary-background), lighten(var(--button-secondary-background), 70%))
 
     &[disabled]
       cursor: default

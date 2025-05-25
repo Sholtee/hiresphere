@@ -1,0 +1,26 @@
+//*********************************
+// File: input.sass
+// Project: job-ad
+//
+// Author: Denes Solti
+//*********************************
+
+input[type="text"], input:not([type]), input[type="number"], input[type="password"]
+  border: 1px solid var(--input-boder-color)
+  border-radius: var(--border-radius-small)
+  font-size: var(--button-font-size)
+  height: var(--input-height)
+  padding: var(--button-padding)
+  box-sizing: border-box
+  outline: none
+  background: var(--widget-background-color)
+  will-change: border-color
+  transition: border-color var(--default-transition-len)
+
+  &:hover, &:focus
+    &:not(:disabled)
+      border-color: var(--input-active-color)
+
+  &:disabled
+    color: var(--font-color-disabled)
+    background-color: var(--app-bg)
