@@ -29,6 +29,7 @@
     .highlighted(v-if="expanded" v-html="md.render(description)" )
     .highlighted(v-else) {{truncate(description, 35)}}
   .foot
+    button.secondary(v-if="expanded" @click="$router.go(-1)") Back
     button.primary(@click="console.log('click')" v-if="expanded") Apply for this job
     button.primary(@click="console.log('click')" v-else) More details
 </template>
@@ -167,8 +168,14 @@ export default {
   > .foot
     display: flex
 
-    > button:first-of-type
-      margin-left: auto
+    > button
+      min-width: 5rem
+
+      &:first-of-type
+        margin-left: auto
+
+      &:not(:last-of-type)
+        margin-right: var(--margin-normal)
 
   &.expanded
     background-color: transparent
