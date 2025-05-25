@@ -17,7 +17,7 @@ router-view
 import {computed} from 'vue';
 
 import Api from '@/scripts/api.js';
-import icon from '@/assets/favicon.png';
+import favIcon from '@/assets/favicon.png';
 import Loader from "@/components/widgets/loader.vue";
 
 export default {
@@ -37,6 +37,11 @@ export default {
       api
     };
   },
+  setup() {
+    return {
+      favIcon
+    };
+  },
   data() {
     return {
       title: this.$resources.language.APP_TITLE_SHORT,
@@ -47,9 +52,6 @@ export default {
   computed: {
     currentUser() {
       return this.$router.currentRoute.value.meta.user;
-    },
-    favIcon() {
-      return icon;
     }
   },
   watch: {

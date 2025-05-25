@@ -6,12 +6,17 @@
 -->
 
 <template lang="pug">
-span Jobs
+job
 </template>
 
 <script>
+import Job from '@/components/widgets/job.vue';
+
 export default {
-  name: 'Jobs'
+  name: 'Jobs',
+  components: {
+    Job
+  }
 };
 </script>
 

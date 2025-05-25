@@ -92,7 +92,7 @@ export default {
     position: relative
     height: 4rem
     width: 100%
-    background-color: white
+    background-color: var(--widget-background-color)
     box-shadow: var(--box-shadow)
 
     > .hamburger
@@ -149,7 +149,7 @@ export default {
         text-decoration: none
 
         &:hover, &.selected
-          border-bottom-color: var(--button-primary-color)
+          border-bottom-color: var(--button-primary-background)
           background-color: var(--button-active-color)
 
         &:not(:last-of-type)
@@ -207,7 +207,7 @@ export default {
           transition: border-right-color var(--default-transition-len)
 
           &:hover, &.selected
-            border-right-color: var(--button-primary-color)
+            border-right-color: var(--button-primary-background)
 
   > .body
     display: flex
