@@ -97,4 +97,7 @@ export default {
       margin-left: auto
       margin-right: auto
       margin-top: var(--margin-large)
+
+      &:last-of-type
+        margin-bottom: var(--margin-small)
 </style>

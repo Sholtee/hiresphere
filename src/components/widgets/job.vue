@@ -17,6 +17,9 @@
           v-for="[tag, bg] in [\
             ['tag_name_1', '#A8C7FA'],\
             ['tag_name_2', '#000000'],\
+            ['tag_name_3', '#ffffff'],\
+            ['tag_name_1', '#A8C7FA'],\
+            ['tag_name_2', '#000000'],\
             ['tag_name_3', '#ffffff'] \
           ]"
           :text="tag"
@@ -124,33 +127,57 @@ export default {
         grid-column: 2
         display: flex
         align-items: center
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
 
-      > .job-title
-        grid-row: 1
-        font-weight: bold
-        font-size: var(--font-size-large)
+        &.job-title
+          grid-row: 1
+          font-weight: bold
+          font-size: var(--font-size-large)
 
-      > [data-icon]
-        color: var(--font-color-disabled)
-        font-size: 1.2em
+        &[data-icon]
+          color: var(--font-color-disabled)
+          font-size: 1.2em
 
-      >.job-location
-        grid-row: 2
+        &.job-location
+          grid-row: 2
 
-      > .company
-        grid-row: 3
+        &.company
+          grid-row: 3
 
       > .tags
         grid-row: 4
         display: flex
         overflow-y: auto
+        gap: var(--margin-small)
 
         > .tag
           margin-top: auto
           margin-bottom: auto
 
-          &:not(:last-of-type)
-            margin-right: var(--margin-small)
+      @media (max-width: 50rem)
+        display: flex
+        flex-flow: column
+        height: max-content
+
+        > *
+          height: max-content
+
+          &:not(:last-child)
+            margin-bottom: var(--margin-small)
+
+        > img, > span
+          margin-left: auto
+          margin-right: auto
+
+        > img
+          height: var(--img-size)
+          width: max-content
+
+        > .tags
+          overflow-y: unset
+          flex-wrap: wrap // wrap items into new rows
 
     > .published
       position: absolute
