@@ -7,7 +7,7 @@
 
 <template lang="pug">
 #app-frame
-  .click-trap(@click="menuVisible = false")
+  .click-trap(@click="menuVisible = false" v-if="menuVisible")
   .head
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
     .title(v-once) {{$resources.language.APP_TITLE}}
