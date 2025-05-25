@@ -12,12 +12,12 @@
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
     .title(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
-      .title.has-icon(v-once) {{$resources.language.APP_TITLE}}
+      .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(
         v-for="{name, titleId, icon} in routes"
         :class="{selected: $router.currentRoute.value.name === name}"
         :to="{name}"
-        :icon="icon"
+        :data-icon="icon"
       ) {{$resources.language.titles[titleId]}}
   .body
     router-view
@@ -120,15 +120,16 @@ export default {
       height: 100%
 
       > .title
-        margin-left: auto
-        margin-right: var(--margin-normal)
+        position: absolute
+        top: 50%
+        left: var(--margin-normal)
+        transform: translateY(-50%)
 
-        @media (max-width: 80rem)
+        @media (max-width: 50rem)
           overflow: hidden
-          width: calc(var(--icon-size-default) + var(--margin-normal))
+          width: var(--icon-size-default)
 
         &:before
-          content: "domain"
           color: var(--app-icon-color)
           font-size: var(--icon-size-default)
           margin-right: var(--margin-normal)
@@ -154,6 +155,9 @@ export default {
 
         &:not(:last-of-type)
           margin-right: var(--margin-small)
+
+        &:first-of-type
+          margin-left: auto
 
         &:last-of-type
           margin-right: auto
@@ -187,6 +191,10 @@ export default {
           transform: translateX(0)
 
         > .title
+          position: relative
+          transform: unset
+          top: 0
+          left: 0
           height: var(--icon-size-large)
           width: var(--icon-size-large)
           margin: var(--margin-normal) auto var(--margin-large)
