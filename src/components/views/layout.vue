@@ -17,7 +17,7 @@
         v-for="{name, titleId, icon} in routes"
         :class="{selected: $router.currentRoute.value.name === name}"
         :to="{name}"
-        :icon="icon"
+        :data-icon="icon"
       ) {{$resources.language.titles[titleId]}}
   .body
     router-view
