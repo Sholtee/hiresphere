@@ -41,6 +41,9 @@ export default class Api extends EventTarget {
     this.dispatchEvent(new CustomEvent('load', {}));
     try {
       const resp = await fetch(...args);
+      if (!resp.ok)
+        throw `Unable to fetch response from API: "${resp.statusText}"`;
+
       return await resp.json();
     } catch (error) {
       this.dispatchEvent(new CustomEvent('error', {
