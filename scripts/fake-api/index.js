@@ -1,5 +1,5 @@
 /*
- * File: vite.config.js
+ * File: index.js
  * Project: job-ad
  *
  * Author: Denes Solti
@@ -19,6 +19,8 @@ if (!statSync(db.name).size) {
     encoding: 'utf8',
     flag: 'r'
   }));
+
+  console.log(`${db.prepare('SELECT COUNT(*) AS count FROM job').get().count} job(s) created`);
 }
 
 app.get('/api/v1/', (req, res) => {
