@@ -33,14 +33,10 @@ button
       cursor: pointer
 
       &.primary
-        color: var(--button-primary-color)
         border-color: darken(var(--button-primary-background), 90%)
-        +bg-transition(var(--button-primary-background), lighten(var(--button-primary-background), 70%))
 
       &.secondary
-        color: var(--button-secondary-color)
         border-color: darken(var(--button-secondary-background), 90%)
-        +bg-transition(var(--button-secondary-background), lighten(var(--button-secondary-background), 70%))
 
     &[disabled]
       cursor: default
@@ -56,3 +52,11 @@ button
     color: #808080
 
     +bg-transition(transparent, var(--button-active))
+
+  &.primary
+    color: var(--button-primary-color)
+    +bg-transition(var(--button-primary-background), lighten(var(--button-primary-background), 70%))
+
+  &.secondary
+    color: var(--button-secondary-color)
+    +bg-transition(var(--button-secondary-background), lighten(var(--button-secondary-background), 70%))

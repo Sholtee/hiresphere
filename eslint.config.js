@@ -133,7 +133,8 @@ export default [
         EventTarget: 'readonly',
         fetch: 'readonly',
         localStorage: 'readonly',
-        URLSearchParams: 'readonly'
+        URLSearchParams: 'readonly',
+        window: 'readonly'
       }
     }
   }
