@@ -44,11 +44,11 @@ app.post('/api/v1/jobs', (req, res) => {
     {page = 0, jobOrCompany = '', location = '', orderBy} = req.body,
     params = {},
     query = `
-        SELECT
-           j.id, j.name, j.location, j.company, j.short_description AS shortDescription,
-           j.long_description AS longDescription, j.image_base64 AS logo, j.created
-        FROM job j 
-        WHERE 1 = 1`;
+      SELECT
+         j.id, j.name, j.location, j.company, j.short_description AS shortDescription,
+         j.long_description AS longDescription, j.image_base64 AS logo, j.created
+      FROM job j 
+      WHERE 1 = 1`;
 
   // when an employer is logged in, return its own jobs only
   if (typeof userId === 'number') {
