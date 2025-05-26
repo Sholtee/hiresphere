@@ -31,12 +31,6 @@ export default {
       fabVisible: false
     };
   },
-  computed: {
-    scrollVisible() {
-      const {holder: {scrollHeight, clientHeight}} = this.$refs;
-      return scrollHeight > clientHeight;
-    }
-  },
   async mounted() {
     this.handleResize = debounce(() => this.resetItems(), 200);
     window.addEventListener('resize', this.handleResize);
@@ -54,7 +48,9 @@ export default {
       this.fabVisible = scrollTop > 20;
     },
     async resetItems() {
-      while (!this.scrollVisible && await this.renderNextPage()) {
+      const {holder: {scrollHeight, clientHeight}} = this.$refs;
+
+      while (scrollHeight <= clientHeight && await this.renderNextPage()) {
         await this.$nextTick();
       }
     },
