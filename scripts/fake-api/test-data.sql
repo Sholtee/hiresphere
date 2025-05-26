@@ -17,27 +17,6 @@ INSERT INTO user(name) VALUES
    ('test@employer2.hu'),
    ('test@employer3.hu');
 
-CREATE TABLE user_role(
-  user_id INTEGER NOT NULL,
-  role_id INTEGER NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES user(id),
-  FOREIGN KEY (role_id) REFERENCES role(id)
-);
-CREATE UNIQUE INDEX idx_user_role ON user_role(user_id, role_id);
-INSERT INTO user_role
-SELECT
-  (SELECT id FROM user WHERE name = 'test@employer1.hu') AS user_id,
-  (SELECT id FROM role WHERE name = 'employer') AS role_id;
-INSERT INTO user_role
-SELECT
-  (SELECT id FROM user WHERE name = 'test@employer2.hu') AS user_id,
-  (SELECT id FROM role WHERE name = 'employer') AS role_id;
-INSERT INTO user_role
-SELECT
-  (SELECT id FROM user WHERE name = 'test@employer3.hu') AS user_id,
-  (SELECT id FROM role WHERE name = 'employer') AS role_id;
-
 CREATE TABLE job(
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL CHECK(LENGTH(name) <= 50),

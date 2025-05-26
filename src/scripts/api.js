@@ -26,6 +26,9 @@ export default class Api extends EventTarget {
         case 'POST':
           impl = params => this.#fetchWrapper(path, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify(params)
           });
           break;

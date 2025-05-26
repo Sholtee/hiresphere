@@ -24,6 +24,10 @@ export default {
   name: 'Jobs',
   components: {
     Job
+  },
+  inject: ['api'],
+  async mounted() {
+    console.log(await this.api.listJobs());
   }
 };
 </script>
