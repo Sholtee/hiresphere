@@ -7,8 +7,8 @@
 
 <template lang="pug">
 #app-frame
-  .click-trap(@click="menuVisible = false" v-if="menuVisible")
   .head
+    .click-trap(@click="menuVisible = false" v-if="menuVisible")
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
     .title(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
@@ -65,7 +65,7 @@ export default {
 
   --box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37)
   --button-border: .3rem solid transparent
-  --click-trap-z-index: 1
+  --click-trap-z-index: 2
   --icon-size-default: 2rem
   --icon-size-large: 7rem
   --no-border: 0 solid transparent
@@ -76,24 +76,25 @@ export default {
   width: 100%
   height: 100%
 
-  > .click-trap
-    display: none
-
-    @media (max-width: $sidebar-media-max-with)
-      position: absolute
-      display: block
-      left: 0
-      top: 0
-      width: 100%
-      height: 100%
-      z-index: var(--click-trap-z-index)
-
   > .head
     position: relative
     height: 4rem
     width: 100%
     background-color: var(--widget-background-color)
     box-shadow: var(--box-shadow)
+    z-index: calc(var(--click-trap-z-index) - 1)
+
+    > .click-trap
+      display: none
+
+      @media (max-width: $sidebar-media-max-with)
+        position: fixed
+        display: block
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        z-index: var(--click-trap-z-index)
 
     > .hamburger
       position: absolute
@@ -103,7 +104,6 @@ export default {
       left: var(--margin-small)
       padding: var(--padding-small)
       font-size: 1.5rem
-      z-index: 1
 
     .title
       width: max-content
