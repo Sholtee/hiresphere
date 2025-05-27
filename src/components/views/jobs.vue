@@ -7,12 +7,12 @@
 
 <template lang="pug">
 infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{resetItems}")
-  .search
+  .search(v-once)
     .job-search.has-icon(data-icon="domain")
       input(type="text" :placeholder="$resources.language.SEARCH_JOB_OR_COMPANY")
     .location-search.has-icon(data-icon="location_on")
       input(type="text" :placeholder="$resources.language.SEARCH_LOCATION")
-    button.secondary(@click="resetItems" ref="searchButton") Search
+    button.secondary(@click="resetItems" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
     job(v-for="job in jobs" :key="job.id")
 </template>

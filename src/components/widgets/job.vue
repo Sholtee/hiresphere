@@ -30,9 +30,9 @@
     .highlighted(v-if="expanded" v-html="md.render(description)" )
     .highlighted(v-else) {{truncate(description, 35)}}
   .foot
-    button.secondary(v-if="expanded" @click="$router.go(-1)") Back
-    button.primary(@click="console.log('click')" v-if="expanded") Apply for this job
-    button.primary(@click="console.log('click')" v-else) More details
+    button.secondary(v-if="expanded" @click="$router.go(-1)") {{$resources.language.BACK}}
+    button.primary(@click="console.log('click')" v-if="expanded") {{$resources.language.APPLY}}
+    button.primary(@click="console.log('click')" v-else) {{$resources.language.MORE_DETAILS}}
 </template>
 
 <script>
