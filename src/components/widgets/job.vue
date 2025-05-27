@@ -47,7 +47,7 @@ export default {
     return {
       imagePlaceholder,
       md: mdFactory({
-        // disable HTL tags in the input
+        // disable HTML tags in the input
         html: false,
         breaks: true
       })
