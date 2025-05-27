@@ -13,5 +13,6 @@
     "SEARCH": "Search",
     "SEARCH_JOB_OR_COMPANY": "Job or company...",
     "SEARCH_LOCATION": "Location..."
-  }
+  },
+  "DATE_FMT": "MMM DD."
 }

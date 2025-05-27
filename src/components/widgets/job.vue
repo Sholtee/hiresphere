@@ -14,7 +14,7 @@
       span.company.has-icon(data-icon="domain") {{job.company}}
       .tags
         tag(v-for="{value, color} in job.tags" :text="value" :bg="color")
-    span.published.highlighted okt. 26
+    span.published.highlighted {{formatDate(job.created)}}
   .body
     .highlighted(v-if="expanded" v-html="md.render(job.description)" )
     .highlighted(v-else) {{truncate(job.shortDescription, 35)}}
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs';
 import mdFactory from 'markdown-it';
 
 import imagePlaceholder from '@/assets/company.png';
@@ -55,6 +56,9 @@ export default {
     };
   },
   methods: {
+    formatDate(date) {
+      return dayjs(date).format(this.$resources.DATE_FMT);
+    },
     truncate(str, maxWords) {
       const words = str.trim().split(/\s+/);
       if (words.length > maxWords)
