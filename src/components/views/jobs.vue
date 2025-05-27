@@ -47,6 +47,8 @@ export default {
 
       this.currentPage++;
       this.jobs = [...this.jobs, ...fetchedPage];
+
+      return true;
     }
   }
 };

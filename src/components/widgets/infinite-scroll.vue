@@ -48,9 +48,9 @@ export default {
       this.fabVisible = scrollTop > 20;
     },
     async resetItems() {
-      const {holder: {scrollHeight, clientHeight}} = this.$refs;
+      const {holder} = this.$refs;
 
-      while (scrollHeight <= clientHeight && await this.renderNextPage()) {
+      while (holder.scrollHeight <= holder.clientHeight && await this.renderNextPage()) {
         await this.$nextTick();
       }
     },
