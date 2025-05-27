@@ -2,5 +2,13 @@
   "healthcheck": {
     "method": "GET",
     "path": "/api/v1"
+  },
+  "listJobs": {
+    "method": "POST",
+    "path": "/api/v1/jobs"
+  },
+  "getJob": {
+    "method": "GET",
+    "path": "/api/v1/job"
   }
 }

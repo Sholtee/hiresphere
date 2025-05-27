@@ -4,100 +4,161 @@
 
    Author: Denes Solti
 -->
-
 <template lang="pug">
-.jobs
-  .search
-    .job-search.has-icon(data-icon="domain")
-      input(type="text" :placeholder="$resources.language.SEARCH_JOB_OR_COMPANY")
-    .location-search.has-icon(data-icon="location_on")
-      input(type="text" :placeholder="$resources.language.SEARCH_LOCATION")
-    button.secondary Search
+infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{renderInitialItems}")
+  .search(v-once)
+    input.has-icon(
+      v-for="(input , cls) in searchInputs"
+      :class="cls"
+      :data-icon="input.icon"
+      :placeholder="$resources.language[input.placeholder]"
+      v-model="input.model"
+      v-focus="input.focus"
+      @keyup.enter="loadJobs"
+    )
+    button.secondary(@click="submitSearch(renderInitialItems)" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
-    job
+    job(v-for="job in jobs" :key="job.id" :job="job")
+      template(v-slot:buttons)
+        button.primary(@click="$router.push({name: 'Job', params: {jobId: job.id}})")
+          | {{$resources.language.MORE_DETAILS}}
 </template>
 
 <script>
+import InfiniteScroll from "@/components/widgets/infinite-scroll.vue";
 import Job from '@/components/widgets/job.vue';
 
 export default {
   name: 'Jobs',
   components: {
+    InfiniteScroll,
     Job
+  },
+  inject: ['api'],
+  setup() {
+    // data that don't need to be reactive
+    return {
+      searchParams: {},
+      searchInputs: {
+        'job-or-company': {
+          icon: 'domain',
+          placeholder: 'SEARCH_JOB_OR_COMPANY',
+          model: '',
+          focus: true
+        },
+        'location': {
+          icon: 'location_on',
+          placeholder: 'SEARCH_LOCATION',
+          model: ''
+        }
+      }
+    };
+  },
+  data() {
+    return {
+      jobs: []
+    };
+  },
+  mounted() {
+    this.loadJobs();
+  },
+  methods: {
+    async nextPage() {
+      const fetchedPage = await this.api.listJobs(this.searchParams);
+      if (!fetchedPage.length)
+        return false;
+
+      this.searchParams.page++;
+      this.jobs = [...this.jobs, ...fetchedPage];
+
+      return true;
+    },
+    async submitSearch(renderInitialItems) {
+      this.searchParams = {
+        jobOrCompany: this.searchInputs['job-or-company'].model,
+        location: this.searchInputs['location'].model,
+        page: 0
+      };
+
+      this.jobs = [];
+
+      // wait the DOM cleanup to be done
+      await this.$nextTick();
+
+      renderInitialItems();
+    },
+    loadJobs() {
+      this.$refs.searchButton.click();
+    }
   }
 };
 </script>
 
 <style lang="sass" scoped>
-.jobs
-  width: 100%
-  height: 100%
-  overflow-y: auto
+.search
+  --border-size: 1px
+  --input-height-mod: calc(var(--input-height) + .5rem)
 
-  > .search
-    --border-size: 1px
-    --input-height-mod: calc(var(--input-height) + .5rem)
+  display: flex
+  padding: 1rem
+  border: var(--border-size) solid var(--input-boder-color)
+  border-radius: var(--border-radius-small)
+  height: max-content
+  max-width: 90%
+  width: max-content
+  margin-left: auto
+  margin-right: auto
+  margin-top: var(--margin-normal)
 
-    display: flex
-    padding: 1rem
-    border: var(--border-size) solid var(--input-boder-color)
-    border-radius: var(--border-radius-small)
-    height: max-content
-    max-width: 90%
-    width: max-content
-    margin-left: auto
-    margin-right: auto
-    margin-top: var(--margin-normal)
+  > *:not(:last-child)
+    margin-right: var(--margin-normal)
 
-    > *:not(:last-child)
-      margin-right: var(--margin-normal)
+  > .has-icon
+    height: var(--input-height-mod)
 
-    > .has-icon
-      height: var(--input-height-mod)
+    &:before
+      border: var(--border-size) solid var(--input-boder-color)
+      border-right: unset
+      border-top-left-radius: var(--border-radius-small)
+      border-bottom-left-radius: var(--border-radius-small)
+      padding-left: var(--padding-small)
+      padding-right: var(--padding-small)
+      margin-right: 0
+      height: 100%
+      box-sizing: border-box
+      line-height: var(--input-height-mod)
 
-      &:before
-        border: var(--border-size) solid var(--input-boder-color)
-        border-right: unset
-        border-top-left-radius: var(--border-radius-small)
-        border-bottom-left-radius: var(--border-radius-small)
-        padding-left: var(--padding-small)
-        padding-right: var(--padding-small)
-        margin-right: 0
-        height: 100%
-        box-sizing: border-box
-        line-height: var(--input-height-mod)
+    &.job-or-company
+      width: 20rem
 
-      &.job-search
-        width: 20rem
+    &.location
+      width: 10rem
 
-      &.location-search
-        width: 10rem
+    > input
+      border-bottom-left-radius: 0
+      border-top-left-radius: 0
+      height: 100%
+      width: 100%
 
-      > input
-        border-bottom-left-radius: 0
-        border-top-left-radius: 0
-        height: 100%
-        width: 100%
-
-    @media (max-width: 50rem)
-      flex-flow: column
-
-      > .has-icon
-        width: 20rem !important
-
-      > *:not(:last-child)
-        margin-right: 0
-        margin-bottom: var(--margin-normal)
-
-  > .job-holder
-    display: flex
+  @media (max-width: 50rem)
     flex-flow: column
 
-    > .job
-      margin-left: auto
-      margin-right: auto
-      margin-top: var(--margin-large)
+    > .has-icon
+      width: 20rem !important
 
-      &:last-of-type
-        margin-bottom: var(--margin-small)
+    > *:not(:last-child)
+      margin-right: 0
+      margin-bottom: var(--margin-normal)
+
+.job-holder
+  display: flex
+  flex-flow: column
+
+  > .job
+    margin-left: auto
+    margin-right: auto
+    margin-top: var(--margin-large)
+
+    &:last-of-type
+      margin-bottom: var(--margin-small)
 </style>

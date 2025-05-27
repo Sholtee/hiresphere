@@ -16,16 +16,26 @@ export default class Api extends EventTarget {
       switch (method.toUpperCase()) {
         case 'GET':
           impl = params => {
-            // path is captured so do not modify it
             let url = path;
-            if (typeof params === 'object')
-              url += `?${new URLSearchParams(params)}`;
+            switch (typeof params) {
+              case 'undefined':
+                break;
+              case 'object':
+                url += `?${new URLSearchParams(params)}`;
+                break;
+              default:
+                url += `/${encodeURIComponent(params)}`;
+                break;
+            }
             return this.#fetchWrapper(url);
           };
           break;
         case 'POST':
           impl = params => this.#fetchWrapper(path, {
             method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify(params)
           });
           break;
@@ -41,6 +51,9 @@ export default class Api extends EventTarget {
     this.dispatchEvent(new CustomEvent('load', {}));
     try {
       const resp = await fetch(...args);
+      if (!resp.ok)
+        throw `Unable to fetch the response: "${resp.statusText}"`;
+
       return await resp.json();
     } catch (error) {
       this.dispatchEvent(new CustomEvent('error', {

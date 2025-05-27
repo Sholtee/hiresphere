@@ -7,7 +7,12 @@
 
     "APP_TITLE": "Profession portal",
     "APP_TITLE_SHORT": "Profession",
+    "APPLY": "Apply for this job",
+    "BACK": "Back",
+    "MORE_DETAILS": "More details",
+    "SEARCH": "Search",
     "SEARCH_JOB_OR_COMPANY": "Job or company...",
     "SEARCH_LOCATION": "Location..."
-  }
+  },
+  "DATE_FMT": "MMM DD."
 }
