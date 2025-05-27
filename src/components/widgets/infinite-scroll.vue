@@ -7,7 +7,7 @@
 <template lang="pug">
 .scrollable
   .items(ref="holder" @scroll="onScroll")
-    slot(:resetItems="resetItems")
+    slot(:renderInitialItems="renderInitialItems")
   button.fab-up.secondary.material-icons(v-if="fabVisible" @click="scrollToTop") arrow_upward
 </template>
 
@@ -32,7 +32,7 @@ export default {
     };
   },
   async mounted() {
-    this.handleResize = debounce(() => this.resetItems(), 200);
+    this.handleResize = debounce(() => this.renderInitialItems(), 200);
     window.addEventListener('resize', this.handleResize);
   },
   unmounted() {
@@ -47,7 +47,7 @@ export default {
 
       this.fabVisible = scrollTop > 20;
     },
-    async resetItems() {
+    async renderInitialItems() {
       const {holder} = this.$refs;
 
       while (holder.scrollHeight <= holder.clientHeight && await this.renderNextPage()) {

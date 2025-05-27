@@ -4,15 +4,19 @@
 
    Author: Denes Solti
 -->
-
 <template lang="pug">
-infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{resetItems}")
+infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{renderInitialItems}")
   .search(v-once)
-    .job-search.has-icon(data-icon="domain")
-      input(type="text" :placeholder="$resources.language.SEARCH_JOB_OR_COMPANY")
-    .location-search.has-icon(data-icon="location_on")
-      input(type="text" :placeholder="$resources.language.SEARCH_LOCATION")
-    button.secondary(@click="resetItems" ref="searchButton") {{$resources.language.SEARCH}}
+    input.has-icon(
+      v-for="(input , cls) in searchInputs"
+      :class="cls"
+      :data-icon="input.icon"
+      :placeholder="$resources.language[input.placeholder]"
+      v-model="input.model"
+      v-focus="input.focus"
+      @keyup.enter="loadJobs"
+    )
+    button.secondary(@click="submitSearch(renderInitialItems)" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
     job(v-for="job in jobs" :key="job.id" :job="job")
 </template>
@@ -28,27 +32,60 @@ export default {
     Job
   },
   inject: ['api'],
+  setup() {
+    // data that don't need to be reactive
+    return {
+      searchParams: {},
+      searchInputs: {
+        'job-or-company': {
+          icon: 'domain',
+          placeholder: 'SEARCH_JOB_OR_COMPANY',
+          model: '',
+          focus: true
+        },
+        'location': {
+          icon: 'location_on',
+          placeholder: 'SEARCH_LOCATION',
+          model: ''
+        }
+      }
+    };
+  },
   data() {
     return {
-      jobs: [],
-      currentPage: 0
+      jobs: []
     };
   },
   mounted() {
-    this.$refs.searchButton.click();
+    this.loadJobs();
   },
   methods: {
     async nextPage() {
-      const fetchedPage = await this.api.listJobs({
-        page: this.currentPage
-      });
+      const fetchedPage = await this.api.listJobs(this.searchParams);
       if (!fetchedPage.length)
         return false;
 
-      this.currentPage++;
+      this.searchParams.page++;
       this.jobs = [...this.jobs, ...fetchedPage];
 
       return true;
+    },
+    async submitSearch(renderInitialItems) {
+      this.searchParams = {
+        jobOrCompany: this.searchInputs['job-or-company'].model,
+        location: this.searchInputs['location'].model,
+        page: 0
+      };
+
+      this.jobs = [];
+
+      // wait the DOM cleanup to be done
+      await this.$nextTick();
+
+      renderInitialItems();
+    },
+    loadJobs() {
+      this.$refs.searchButton.click();
     }
   }
 };
@@ -88,10 +125,10 @@ export default {
       box-sizing: border-box
       line-height: var(--input-height-mod)
 
-    &.job-search
+    &.job-or-company
       width: 20rem
 
-    &.location-search
+    &.location
       width: 10rem
 
     > input
