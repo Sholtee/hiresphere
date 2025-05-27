@@ -1,5 +1,5 @@
 <!--
-   File: job.vue
+   File: job-details.vue
    Project: job-ad
 
    Author: Denes Solti
@@ -17,11 +17,9 @@
     span.published.highlighted {{formatDate(job.created)}}
   .body
     .highlighted(v-if="expanded" v-html="md.render(job.description)" )
-    .highlighted(v-else) {{truncate(job.shortDescription, 35)}}
+    .highlighted(v-else) {{truncate(job.description, 35)}}
   .foot
-    button.secondary(v-if="expanded" @click="$router.go(-1)") {{$resources.language.BACK}}
-    button.primary(@click="console.log('click')" v-if="expanded") {{$resources.language.APPLY}}
-    button.primary(@click="console.log('click')" v-else) {{$resources.language.MORE_DETAILS}}
+    slot(name="buttons")
 </template>
 
 <script>
@@ -176,7 +174,7 @@ export default {
   > .foot
     display: flex
 
-    > button
+    > ::v-deep(button)
       min-width: 5rem
 
       &:first-of-type
@@ -197,5 +195,5 @@ export default {
 
       > .highlighted
         ::v-deep(h1)
-          font-size: 1.5em
+          font-size: var(--font-size-large)
 </style>

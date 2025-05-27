@@ -19,6 +19,9 @@ infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{renderInitia
     button.secondary(@click="submitSearch(renderInitialItems)" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
     job(v-for="job in jobs" :key="job.id" :job="job")
+      template(v-slot:buttons)
+        button.primary(@click="$router.push({name: 'Job', params: {jobId: job.id}})")
+          | {{$resources.language.MORE_DETAILS}}
 </template>
 
 <script>

@@ -15,13 +15,11 @@ export default class Api extends EventTarget {
 
       switch (method.toUpperCase()) {
         case 'GET':
-          impl = params => {
-            // path is captured so do not modify it
-            let url = path;
-            if (typeof params === 'object')
-              url += `?${new URLSearchParams(params)}`;
-            return this.#fetchWrapper(url);
-          };
+          impl = params => this.#fetchWrapper(
+            typeof params === 'object'
+              ? `${path}?${new URLSearchParams(params)}`
+              : `${path}/${encodeURIComponent(params)}`
+          );
           break;
         case 'POST':
           impl = params => this.#fetchWrapper(path, {
@@ -45,7 +43,7 @@ export default class Api extends EventTarget {
     try {
       const resp = await fetch(...args);
       if (!resp.ok)
-        throw `Unable to fetch response from API: "${resp.statusText}"`;
+        throw `Unable to fetch the response: "${resp.statusText}"`;
 
       return await resp.json();
     } catch (error) {

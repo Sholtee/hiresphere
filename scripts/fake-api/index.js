@@ -37,22 +37,47 @@ app.get('/api/v1/', (req, res) => {
   res.send(JSON.stringify('Hello world!'));
 });
 
+app.get('/api/v1/job/:jobId', (req, res) => {
+  const {user: {id: userId} = {}, params: {jobId}} = req;
+
+  let
+    params = {
+      jobId
+    },
+    queryExtension = 'WHERE j.id = @jobId';
+
+  // when an employer is logged in, return its own jobs only
+  if (typeof userId === 'number') {
+    queryExtension += ' AND j.user_id = @userId';
+    params = {
+      ...params,
+      userId
+    };
+  }
+
+  const result = queryJobs(queryExtension, 'long', params);
+  if (!result.length) {
+    res.status(404);
+    res.send('Not found');
+    return;
+  }
+
+  res.setHeader('content-type', 'application/json');
+  res.status(200);
+  res.send(JSON.stringify(result[0]));
+});
+
 app.post('/api/v1/jobs', (req, res) => {
   const {user: {id: userId} = {}} = req;
 
   let
-    {page = 0, jobOrCompany = '', location = '', orderBy} = req.body,
+    {page = 0, jobOrCompany = '', location = ''} = req.body,
     params = {},
-    query = `
-      SELECT
-         j.id, j.name, j.location, j.company, j.short_description AS shortDescription,
-         j.long_description AS longDescription, j.image_base64 AS logo, j.created
-      FROM job j 
-      WHERE 1 = 1`;
+    queryExtension = 'WHERE 1 = 1';
 
   // when an employer is logged in, return its own jobs only
   if (typeof userId === 'number') {
-    query += ' AND j.user_id = @userId';
+    queryExtension += ' AND j.user_id = @userId';
     params = {
       ...params,
       userId
@@ -60,7 +85,7 @@ app.post('/api/v1/jobs', (req, res) => {
   }
 
   if (jobOrCompany?.length) {
-    query += ' AND (j.company LIKE @jobOrCompany OR j.name LIKE @jobOrCompany)';
+    queryExtension += ' AND (j.company LIKE @jobOrCompany OR j.name LIKE @jobOrCompany)';
     params = {
       ...params,
       jobOrCompany: `%${jobOrCompany}%`
@@ -68,23 +93,11 @@ app.post('/api/v1/jobs', (req, res) => {
   }
 
   if (location?.length) {
-    query += ' AND j.location LIKE @location';
+    queryExtension += ' AND j.location LIKE @location';
     params = {
       ...params,
       location: `%${location}%`
     };
-  }
-
-  if (!['name', 'created'].includes(orderBy))
-    orderBy = 'name';
-
-  switch (orderBy) {
-    case 'name':
-      query += ' ORDER BY name ASC';
-      break;
-    case 'created':
-      query += ' ORDER BY created DESC';
-      break;
   }
 
   if (typeof page !== 'number')
@@ -92,23 +105,38 @@ app.post('/api/v1/jobs', (req, res) => {
 
   const pageSize = 5;
 
-  query += ' LIMIT @pageSize OFFSET @offset';
+  queryExtension += ' LIMIT @pageSize OFFSET @offset';
   params = {
     ...params,
     pageSize,
     offset: page * pageSize
   };
 
-  query = `
-    WITH job_tmp AS (${query})
-      SELECT j.*, t.value, t.color FROM job_tmp j
-      JOIN tag t ON t.job_id = j.id
-  `;
+  const result = queryJobs(queryExtension, 'short', params);
 
-  const result = Object.values(db.prepare(query).all(params).reduce((acc, item) => {
+  res.setHeader('content-type', 'application/json');
+  res.status(200);
+  res.send(JSON.stringify(result));
+});
+
+createServer({}, app).listen(1986);
+
+function queryJobs(queryExtension, description, params) {
+  const query = `
+    WITH job_tmp as (
+      SELECT
+         j.id, j.name, j.location, j.company, j.${description}_description AS description,
+         j.image_base64 AS logo, j.created
+      FROM job j 
+      ${queryExtension}
+    )
+      SELECT j.*, t.value, t.color FROM job_tmp j
+      JOIN tag t ON t.job_id = j.id`;
+
+  return Object.values(db.prepare(query).all(params).reduce((acc, item) => {
     const {
-      id, name, location, company, shortDescription,
-      longDescription, logo, created,
+      id, name, location, company,
+      description, logo, created,
       value, color
     } = item;
 
@@ -118,8 +146,7 @@ app.post('/api/v1/jobs', (req, res) => {
         name,
         location,
         company,
-        shortDescription,
-        longDescription,
+        description,
         logo,
         created,
         tags: []
@@ -131,10 +158,4 @@ app.post('/api/v1/jobs', (req, res) => {
 
     return acc;
   }, {}));
-
-  res.setHeader('content-type', 'application/json');
-  res.status(200);
-  res.send(JSON.stringify(result));
-});
-
-createServer({}, app).listen(1986);
+}

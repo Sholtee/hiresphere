@@ -37,12 +37,9 @@ const routes = [
         }
       },
       {
-        path: '/edit/:jobId',
-        name: 'EditJob',
-        component: () => import('@/components/views/edit.vue'),
-        meta: {
-          requiredRoles: ['job-poster']
-        }
+        path: '/job/:jobId',
+        name: 'Job',
+        component: () => import('@/components/views/job-details.vue')
       }
     ]
   },
