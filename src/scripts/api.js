@@ -15,11 +15,20 @@ export default class Api extends EventTarget {
 
       switch (method.toUpperCase()) {
         case 'GET':
-          impl = params => this.#fetchWrapper(
-            typeof params === 'object'
-              ? `${path}?${new URLSearchParams(params)}`
-              : `${path}/${encodeURIComponent(params)}`
-          );
+          impl = params => {
+            let url = path;
+            switch (typeof params) {
+              case 'undefined':
+                break;
+              case 'object':
+                url += `?${new URLSearchParams(params)}`;
+                break;
+              default:
+                url += `/${encodeURIComponent(params)}`;
+                break;
+            }
+            return this.#fetchWrapper(url);
+          };
           break;
         case 'POST':
           impl = params => this.#fetchWrapper(path, {
