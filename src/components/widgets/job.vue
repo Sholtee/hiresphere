@@ -8,27 +8,16 @@
 .job(:class="{expanded}" v-once)
   .head
     .grid
-      img(:src="'bad'" @error="$event.target.src = imagePlaceholder")
-      span.job-title.highlighted Job title
-      span.job-location.has-icon(data-icon="location_on") Job location
-      span.company.has-icon(data-icon="domain") Company name
+      img(:src="job.logo" @error="$event.target.src = imagePlaceholder")
+      span.job-title.highlighted {{job.name}}
+      span.job-location.has-icon(data-icon="location_on") {{job.location}}
+      span.company.has-icon(data-icon="domain") {{job.company}}
       .tags
-        tag(
-          v-for="[tag, bg] in [\
-            ['tag_name_1', '#A8C7FA'],\
-            ['tag_name_2', '#000000'],\
-            ['tag_name_3', '#ffffff'],\
-            ['tag_name_1', '#A8C7FA'],\
-            ['tag_name_2', '#000000'],\
-            ['tag_name_3', '#ffffff'] \
-          ]"
-          :text="tag"
-          :bg="bg"
-        )
+        tag(v-for="{value, color} in job.tags" :text="value" :bg="color")
     span.published.highlighted okt. 26
   .body
-    .highlighted(v-if="expanded" v-html="md.render(description)" )
-    .highlighted(v-else) {{truncate(description, 35)}}
+    .highlighted(v-if="expanded" v-html="md.render(job.description)" )
+    .highlighted(v-else) {{truncate(job.shortDescription, 35)}}
   .foot
     button.secondary(v-if="expanded" @click="$router.go(-1)") {{$resources.language.BACK}}
     button.primary(@click="console.log('click')" v-if="expanded") {{$resources.language.APPLY}}
@@ -47,6 +36,10 @@ export default {
     Tag
   },
   props: {
+    job: {
+      type: Object,
+      required: true
+    },
     expanded: {
       type: Boolean
     }
@@ -59,17 +52,6 @@ export default {
         html: false,
         breaks: true
       })
-    };
-  },
-  data() {
-    return {
-      description: '# Title\n' +
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc augue ex, fringilla ut dignissim sit amet, ' +
-        'ullamcorper a urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis ' +
-        'egestas. Morbi ut purus tristique, porta libero a, mattis nisi.\n' +
-        '- list item 1\n' +
-        '- list item 2\n' +
-        '- list item 3'
     };
   },
   methods: {

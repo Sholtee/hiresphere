@@ -14,7 +14,7 @@ infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{resetItems}"
       input(type="text" :placeholder="$resources.language.SEARCH_LOCATION")
     button.secondary(@click="resetItems" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
-    job(v-for="job in jobs" :key="job.id")
+    job(v-for="job in jobs" :key="job.id" :job="job")
 </template>
 
 <script>
