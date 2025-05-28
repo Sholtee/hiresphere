@@ -36,15 +36,13 @@ export default {
     TextBox
   },
   inject: ['setTitle'],
-  beforeMount() {
-    this.setTitle(this.$resources.language.TITLE_HOME);
-  },
   data() {
     return {
       content: false
     };
   },
   async beforeMount() {
+    this.setTitle(this.$resources.language.TITLE_HOME);
     this.content = md.render(await (await window.fetch('/resources/welcome.md')).text());
   }
 };
