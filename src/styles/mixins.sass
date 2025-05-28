@@ -4,6 +4,15 @@
 //
 // Author: Denes Solti
 //*********************************
+=media-max-width($mw)
+  // media query cannot contain css variable
+  @media (max-width: $mw)
+    @content
+
+=media-max-width-50()
+  +media-max-width(50rem)
+    @content
+
 =bg-transition($from, $to)
   background-color: $from
 

@@ -60,12 +60,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-#app-frame
-  $sidebar-media-max-with: 50rem // cannot be CSS variable
+@use "@/styles/mixins" as *
 
+#app-frame
   --box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37)
   --button-border: .3rem solid transparent
-  --click-trap-z-index: 2
+  --click-trap-z-index: 4
   --icon-size-default: 2rem
   --icon-size-large: 7rem
   --no-border: 0 solid transparent
@@ -87,7 +87,7 @@ export default {
     > .click-trap
       display: none
 
-      @media (max-width: $sidebar-media-max-with)
+      +media-max-width-50
         position: fixed
         display: block
         left: 0
@@ -125,10 +125,6 @@ export default {
         left: var(--margin-normal)
         transform: translateY(-50%)
 
-        @media (max-width: 50rem)
-          overflow: hidden
-          width: var(--icon-size-default)
-
         &:before
           color: var(--app-icon-color)
           font-size: var(--icon-size-default)
@@ -162,7 +158,7 @@ export default {
         &:last-of-type
           margin-right: auto
 
-    @media (max-width: $sidebar-media-max-with)
+    +media-max-width-50
       > .hamburger
         display: block
 
@@ -198,6 +194,7 @@ export default {
           height: var(--icon-size-large)
           width: var(--icon-size-large)
           margin: var(--margin-normal) auto var(--margin-large)
+          overflow: hidden
 
           &:before
             font-size: var(--icon-size-large)

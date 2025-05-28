@@ -104,8 +104,13 @@ function timeout(ms) {
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/mixins" as *
+
 .slide-show
   --slide-show-height: 20rem
+
+  +media-max-width-50
+    --slide-show-height: 10rem
 
   position: relative
   width: 60rem
