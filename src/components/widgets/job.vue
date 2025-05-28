@@ -13,7 +13,7 @@
       span.job-location.has-icon(data-icon="location_on") {{job.location}}
       span.company.has-icon(data-icon="domain") {{job.company}}
       .tags
-        .tag(v-for="{value, color} in job.tags") {{value}}
+        .tag(v-for="tag in job.tags") {{tag}}
     span.published.highlighted {{formatDate(job.created)}}
   .body
     .highlighted(v-if="expanded" v-html="md.render(job.description)" )
