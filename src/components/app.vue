@@ -55,20 +55,17 @@ export default {
     }
   },
   watch: {
-    $route({path, meta: {titleId} = {}}) {
-      if (path === '/')
+    $route(to) {
+      if (to.path === '/')
         // if the user is logged in go to the editor else show the welcome screen
         this.$router.push({
           name: this.currentUser.roles.length ? 'ListJobs' : 'Welcome'
         });
-
-      this.setTitle(this.$resources.language.titles[titleId]);
     }
   },
   methods: {
     setTitle(title) {
       const {$resources: {language: {APP_TITLE_SHORT}}} = this;
-
       this.title = title ? `${APP_TITLE_SHORT} | ${title}` : APP_TITLE_SHORT;
     }
   }

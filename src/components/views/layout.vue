@@ -18,7 +18,7 @@
         :class="{selected: $router.currentRoute.value.name === name}"
         :to="{name}"
         :data-icon="icon"
-      ) {{$resources.language.titles[titleId]}}
+      ) {{$resources.language[titleId]}}
   .body
     router-view
 </template>
@@ -26,7 +26,7 @@
 <script>
 export default {
   name: 'Layout',
-  inject: ['currentUser', 'setTitle'],
+  inject: ['currentUser'],
   data() {
     return {
       menuVisible: false
@@ -40,19 +40,11 @@ export default {
         .filter(({meta: {nav, requiredRoles}}) =>
           // if requiredRoles is null the every user can visit the view
           nav && requiredRoles?.some(role => this.currentUser.roles.includes(role)) !== false)
-        .map(({name, meta: {titleId, nav: {icon}}}) => ({
+        .map(({name, meta: {nav: {icon, titleId}}}) => ({
           name,
-          titleId,
-          icon
+          icon,
+          titleId
         }));
-    }
-  },
-  watch: {
-    $route: {
-      handler({meta: {titleId} = {}}) {
-
-      },
-      immediate: true
     }
   }
 };

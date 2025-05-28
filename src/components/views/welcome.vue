@@ -12,9 +12,9 @@ span Welcome
 <script>
 export default {
   name: 'Welcome',
-  inject: ['api'],
-  async mounted() {
-    console.log(await this.api.healthcheck());
+  inject: ['api', 'setTitle'],
+  beforeMount() {
+    this.setTitle(this.$resources.language.TITLE_HOME);
   }
 };
 </script>
