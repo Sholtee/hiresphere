@@ -1,10 +1,5 @@
 {
   "language": {
-    "titles": {
-      "1": "Home",
-      "2": "Jobs"
-    },
-
     "APP_TITLE": "Profession portal",
     "APP_TITLE_SHORT": "Profession",
     "APPLY": "Apply for this job",
@@ -12,7 +7,10 @@
     "MORE_DETAILS": "More details",
     "SEARCH": "Search",
     "SEARCH_JOB_OR_COMPANY": "Job or company...",
-    "SEARCH_LOCATION": "Location..."
+    "SEARCH_LOCATION": "Location...",
+    "TITLE_HOME": "Home",
+    "TITLE_JOBS": "Jobs",
+    "TITLE_LOGIN": "Login"
   },
   "DATE_FMT": "MMM DD."
 }

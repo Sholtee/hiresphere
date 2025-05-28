@@ -12,9 +12,9 @@ span Login
 <script>
 export default {
   name: 'Login',
-  components: {},
-  beforeCreate() {
-    console.log(`Redirect to: ${this.$router.currentRoute.value.query.redirectTo}`);
+  inject: ['setTitle'],
+  beforeMount() {
+    this.setTitle(this.$resources.language.TITLE_LOGIN);
   }
 };
 </script>
