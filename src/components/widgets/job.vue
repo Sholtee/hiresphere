@@ -13,7 +13,7 @@
       span.job-location.has-icon(data-icon="location_on") {{job.location}}
       span.company.has-icon(data-icon="domain") {{job.company}}
       .tags
-        tag(v-for="{value, color} in job.tags" :text="value" :bg="color")
+        .tag(v-for="tag in job.tags") {{tag}}
     span.published.highlighted {{formatDate(job.created)}}
   .body
     .highlighted(v-if="expanded" v-html="md.render(job.description)" )
@@ -27,13 +27,9 @@ import dayjs from 'dayjs';
 import mdFactory from 'markdown-it';
 
 import imagePlaceholder from '@/assets/company.png';
-import Tag from '@/components/widgets/tag.vue';
 
 export default {
   name: 'Job',
-  components: {
-    Tag
-  },
   props: {
     job: {
       type: Object,
@@ -96,7 +92,7 @@ export default {
       width: 100%
       height: var(--img-size)
       grid-template-columns: var(--img-size) calc(100% - var(--img-size) - var(--margin-normal))  // 2 columns
-      grid-template-rows: 30% 20% 20% 30%   // 4 rows
+      grid-template-rows: 25% 20% 20% 35%   // 4 rows
       column-gap: var(--margin-normal)
 
       > img
@@ -119,6 +115,7 @@ export default {
           grid-row: 1
           font-weight: bold
           font-size: var(--font-size-large)
+          color: var(--font-color-highlighted)
 
         &[data-icon]
           color: var(--font-color-disabled)
@@ -139,6 +136,12 @@ export default {
         > .tag
           margin-top: auto
           margin-bottom: auto
+          background-color: var(--tag-background)
+          padding: var(--padding-small)
+          border-radius: var(--border-radius-large)
+          font-weight: bold
+          font-size: var(--font-size-small)
+          color: var(--font-color-highlighted)
 
       @media (max-width: 50rem)
         display: flex

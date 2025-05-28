@@ -35,7 +35,6 @@ CREATE INDEX idx_location ON job(location);
 CREATE TABLE tag(
   id INTEGER PRIMARY KEY,
   job_id INTEGER NOT NULL,
-  color TEXT CHECK(LENGTH(color) = 7),
   value TEXT NOT NULL CHECK(LENGTH(value) <= 25),
 
   FOREIGN KEY (job_id) REFERENCES job(id)
@@ -67,12 +66,12 @@ As a **Junior Frontend Developer**, you will collaborate with designers and back
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#4285F4', 'Home office available' FROM temp_last_job_id
+INSERT INTO tag(job_id,  value)
+SELECT id, 'Home office available' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#34A853', 'Cafeteria' FROM temp_last_job_id
+SELECT id, 'Cafeteria' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#FBBC05', 'Agile team' FROM temp_last_job_id;
+SELECT id, 'Agile team' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -102,10 +101,10 @@ We are seeking a motivated **Warehouse Operator** to join our logistics team.
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#6ab053', 'Shift work' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Shift work' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#ff6b61', 'SZÉP Card accepted' FROM temp_last_job_id;
+SELECT id, 'SZÉP Card accepted' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -135,12 +134,12 @@ Join our **customer happiness team** to assist users in resolving their issues p
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#4285F4', 'Remote possible' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Remote possible' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#6ab053', 'Flexible hours' FROM temp_last_job_id
+SELECT id, 'Flexible hours' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#ff6b61', 'Health insurance' FROM temp_last_job_id;
+SELECT id, 'Health insurance' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -170,12 +169,12 @@ As a **QA Tester**, you''ll validate our software across multiple platforms.
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-  SELECT id, '#34A853', 'Performance bonus' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+  SELECT id, 'Performance bonus' FROM temp_last_job_id
   UNION ALL
-  SELECT id, '#6ab053', 'Company laptop' FROM temp_last_job_id
+  SELECT id, 'Company laptop' FROM temp_last_job_id
   UNION ALL
-  SELECT id, '#FBBC05', 'Agile environment' FROM temp_last_job_id;
+  SELECT id, 'Agile environment' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -205,12 +204,12 @@ We are looking for a **creative Graphic Designer** who loves crafting visual sto
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-  SELECT id, '#ff6b61', 'Creative projects' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+  SELECT id, 'Creative projects' FROM temp_last_job_id
   UNION ALL
-  SELECT id, '#4285F4', 'Hybrid work' FROM temp_last_job_id
+  SELECT id, 'Hybrid work' FROM temp_last_job_id
   UNION ALL
-  SELECT id, '#6ab053', 'SZÉP Card accepted' FROM temp_last_job_id;
+  SELECT id, 'SZÉP Card accepted' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -240,10 +239,10 @@ AutoSys is hiring a **Mechanical Engineer** to contribute to prototyping and tes
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
 
-INSERT INTO tag(job_id, color, value)
-  SELECT id, '#FBBC05', 'Lunch support' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+  SELECT id, 'Lunch support' FROM temp_last_job_id
   UNION ALL
-  SELECT id, '#34A853', 'Professional development' FROM temp_last_job_id;
+  SELECT id, 'Professional development' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -272,10 +271,10 @@ INSERT INTO job(name, location, company, short_description, long_description, im
 (SELECT id FROM user WHERE name = 'test@employer2.hu');
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#6ab053', 'Travel reimbursement' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Travel reimbursement' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#ff6b61', 'Health insurance' FROM temp_last_job_id;
+SELECT id, 'Health insurance' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -304,12 +303,12 @@ As a **Customer Support Agent**, you’ll be the first point of contact for our 
 (SELECT id FROM user WHERE name = 'test@employer2.hu');
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#6ab053', 'Remote-friendly' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Remote-friendly' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#4285F4', 'Training provided' FROM temp_last_job_id
+SELECT id, 'Training provided' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#fbbc05', 'Weekend shifts' FROM temp_last_job_id;
+SELECT id, 'Weekend shifts' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -338,10 +337,10 @@ We’re looking for mechanically inclined professionals to run CNC machines in o
 (SELECT id FROM user WHERE name = 'test@employer3.hu');
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#ff6b61', 'Shift work' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Shift work' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#6ab053', 'Meal subsidy' FROM temp_last_job_id;
+SELECT id, 'Meal subsidy' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -370,12 +369,12 @@ INSERT INTO job(name, location, company, short_description, long_description, im
 (SELECT id FROM user WHERE name = 'test@employer3.hu');
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#4285F4', 'Flexible schedule' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Flexible schedule' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#6ab053', 'Cafeteria' FROM temp_last_job_id
+SELECT id, 'Cafeteria' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#ff6b61', 'Performance bonus' FROM temp_last_job_id;
+SELECT id, 'Performance bonus' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
@@ -404,12 +403,12 @@ INSERT INTO job(name, location, company, short_description, long_description, im
 (SELECT id FROM user WHERE name = 'test@employer3.hu');
 
 INSERT INTO temp_last_job_id(id) VALUES (last_insert_rowid());
-INSERT INTO tag(job_id, color, value)
-SELECT id, '#6ab053', 'Seasonal job' FROM temp_last_job_id
+INSERT INTO tag(job_id, value)
+SELECT id, 'Seasonal job' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#ff6b61', 'Free meals' FROM temp_last_job_id
+SELECT id, 'Free meals' FROM temp_last_job_id
 UNION ALL
-SELECT id, '#fbbc05', 'Tips included' FROM temp_last_job_id;
+SELECT id, 'Tips included' FROM temp_last_job_id;
 
 DROP TABLE temp_last_job_id;
 
