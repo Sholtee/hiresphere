@@ -8,17 +8,26 @@
 <template lang="pug">
 .welcome
   slide-show(configJson="/resources/slides.json")
-  .card
+  .content(v-if="content" v-html="content")
+  .foot.card
     text-box(icon="place" :title="$resources.language.ADDRESS")
       | 7633 Pécs, Esztergár Lajosu. 7/b
     text-box(icon="phone" :title="$resources.language.CONTACT")
-      span Email: #[a(href="mailto:vki@vhol.hu") mailto:vki@vhol.hu]
+      span Email: #[a(href="mailto:vki@vhol.hu") vki@vhol.hu]
       | Phone: +36301234567
 </template>
 
 <script>
+import mdFactory from 'markdown-it';
+
 import SlideShow from "@/components/widgets/slide-show.vue";
 import TextBox from "@/components/widgets/text-box.vue";
+
+const md = mdFactory({
+  // we can allow html tags since the content is not user provided
+  html: true,
+  breaks: true
+});
 
 export default {
   name: 'Welcome',
@@ -26,7 +35,14 @@ export default {
     SlideShow,
     TextBox
   },
-  inject: ['api']
+  data() {
+    return {
+      content: false
+    };
+  },
+  async beforeMount() {
+    this.content = md.render(await (await window.fetch('/resources/welcome.md')).text());
+  }
 };
 </script>
 
@@ -44,7 +60,12 @@ export default {
   > .slide-show
     margin-top: var(--margin-normal)
 
-  > .card
+  > .content
+    width: var(--card-width)
+    max-width: var(--card-max-width)
+    color: var(--font-color-highlighted)
+
+  > .foot
     display: flex
     flex-flow: row
 
@@ -60,4 +81,15 @@ export default {
 
       &:not(:last-of-type)
         margin-right: var(--margin-large)
+
+    @media (max-width: 50rem)
+      flex-flow: column
+
+      > .text-box
+        width: 100%
+        margin-left: auto
+        margin-right: auto
+
+        &:not(:last-of-type)
+          margin-bottom: var(--margin-normal)
 </style>

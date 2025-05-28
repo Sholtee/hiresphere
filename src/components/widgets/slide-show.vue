@@ -115,6 +115,7 @@ function timeout(ms) {
   position: relative
   width: var(--card-width)
   max-width: var(--card-max-width)
+  min-height: var(--slide-show-height)
   height: var(--slide-show-height)
   max-height: var(--slide-show-height)
   border-radius: var(--border-radius-large)
