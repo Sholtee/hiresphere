@@ -34,7 +34,7 @@ export default {
     InfiniteScroll,
     Job
   },
-  inject: ['api'],
+  inject: ['api', 'setTitle'],
   setup() {
     // data that don't need to be reactive
     return {
@@ -58,6 +58,9 @@ export default {
     return {
       jobs: []
     };
+  },
+  beforeMount() {
+    this.setTitle(this.$resources.language.TITLE_JOBS);
   },
   mounted() {
     this.loadJobs();

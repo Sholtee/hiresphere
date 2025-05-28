@@ -35,6 +35,10 @@ export default {
     SlideShow,
     TextBox
   },
+  inject: ['setTitle'],
+  beforeMount() {
+    this.setTitle(this.$resources.language.TITLE_HOME);
+  },
   data() {
     return {
       content: false

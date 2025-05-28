@@ -31,13 +31,13 @@ export default {
 
     return {
       currentUser: computed(() => this.currentUser),
-      setTitle: title => this.title = title,
+      setTitle: title => this.setTitle(title),
       api
     };
   },
   data() {
     return {
-      title: this.$resources.language.APP_TITLE_SHORT,
+      title: '',
       // api calls might run parallel -> do not use bool
       loaderVisible: 0
     };
@@ -54,6 +54,12 @@ export default {
         this.$router.push({
           name: this.currentUser.roles.includes('guest') ? 'Welcome' : 'ListJobs'
         });
+    }
+  },
+  methods: {
+    setTitle(title) {
+      const {$resources: {language: {APP_TITLE_SHORT}}} = this;
+      this.title = title ? `${APP_TITLE_SHORT} | ${title}` : APP_TITLE_SHORT;
     }
   }
 };
