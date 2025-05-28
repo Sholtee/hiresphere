@@ -98,6 +98,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/mixins" as *
+
 .search
   --border-size: 1px
   --input-height-mod: calc(var(--input-height) + .5rem)
@@ -143,7 +145,7 @@ export default {
       height: 100%
       width: 100%
 
-  @media (max-width: 50rem)
+  +media-max-width-50
     flex-flow: column
 
     > .has-icon

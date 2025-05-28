@@ -39,12 +39,12 @@ export default {
     width: 100%
     margin-top: 0
     overflow: hidden
-    background-color: #acece6
+    background-color: var(--app-bg)
 
     &:before, &:after
       position: absolute
       content: ''
-      background-color: rgb(93, 172, 255)
+      background-color: var(--loader-color)
       top: 0
       left: 0
       bottom: 0

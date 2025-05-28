@@ -1,13 +1,15 @@
 {
   "language": {
-    "APP_TITLE": "Profession portal",
-    "APP_TITLE_SHORT": "Profession",
+    "APP_TITLE": "HireSphere portal",
+    "APP_TITLE_SHORT": "HireSphere",
     "APPLY": "Apply for this job",
     "BACK": "Back",
     "MORE_DETAILS": "More details",
     "SEARCH": "Search",
     "SEARCH_JOB_OR_COMPANY": "Job or company...",
     "SEARCH_LOCATION": "Location...",
+    "ADDRESS": "Address",
+    "CONTACT": "Contact",
     "TITLE_HOME": "Home",
     "TITLE_JOBS": "Jobs",
     "TITLE_LOGIN": "Login"
