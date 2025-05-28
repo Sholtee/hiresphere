@@ -18,5 +18,5 @@ const app = createApp(App)
   })
   .directive('focus', vFocus);
 
-app.config.globalProperties.$resources = await (await fetch('resources/resources.json')).json();
+app.config.globalProperties.$resources = await (await fetch('/resources/resources.json')).json();
 app.mount('#app');
