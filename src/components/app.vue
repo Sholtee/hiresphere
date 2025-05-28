@@ -33,7 +33,7 @@ export default {
 
     return {
       currentUser: computed(() => this.currentUser),
-      setTitle: title => this.title = title,
+      setTitle: title => this.setTitle(title),
       api
     };
   },
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      title: this.$resources.language.APP_TITLE_SHORT,
+      title: '',
       // api calls might run parallel -> do not use bool
       loaderVisible: 0
     };
@@ -55,12 +55,21 @@ export default {
     }
   },
   watch: {
-    $route(to) {
-      if (to.path === '/')
+    $route({path, meta: {titleId} = {}}) {
+      if (path === '/')
         // if the user is logged in go to the editor else show the welcome screen
         this.$router.push({
           name: this.currentUser.roles.length ? 'ListJobs' : 'Welcome'
         });
+
+      this.setTitle(this.$resources.language.titles[titleId]);
+    }
+  },
+  methods: {
+    setTitle(title) {
+      const {$resources: {language: {APP_TITLE_SHORT}}} = this;
+
+      this.title = title ? `${APP_TITLE_SHORT} | ${title}` : APP_TITLE_SHORT;
     }
   }
 };

@@ -50,8 +50,7 @@ export default {
   watch: {
     $route: {
       handler({meta: {titleId} = {}}) {
-        const {$resources: {language: {APP_TITLE_SHORT, titles}}} = this;
-        this.setTitle(titleId ? `${APP_TITLE_SHORT} | ${titles[titleId]}` : APP_TITLE_SHORT);
+
       },
       immediate: true
     }
