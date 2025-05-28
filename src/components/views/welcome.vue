@@ -49,6 +49,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/mixins" as *
+
 .welcome
   width: 100%
   height: max-content
@@ -83,7 +85,7 @@ export default {
       &:not(:last-of-type)
         margin-right: var(--margin-large)
 
-    @media (max-width: 50rem)
+    +media-max-width-50
       flex-flow: column
 
       > .text-box
