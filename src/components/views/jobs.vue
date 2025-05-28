@@ -156,7 +156,7 @@ export default {
   display: flex
   flex-flow: column
 
-  > .job
+  > .card
     margin-left: auto
     margin-right: auto
     margin-top: var(--margin-large)

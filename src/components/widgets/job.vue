@@ -5,12 +5,12 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-.job(:class="{expanded}" v-once)
+.card(:class="{expanded}" v-once)
   .head
     .grid
       img(:src="job.logo" @error="$event.target.src = imagePlaceholder")
       span.job-title.highlighted {{job.name}}
-      span.job-location.has-icon(data-icon="location_on") {{job.location}}
+      span.job-location.has-icon(data-icon="place") {{job.location}}
       span.company.has-icon(data-icon="domain") {{job.company}}
       .tags
         .tag(v-for="tag in job.tags") {{tag}}
@@ -64,20 +64,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.job
+.card
   --holder-width: 30rem
-
-  position: relative
-  display: inline-flex
-  flex-flow: column
-  width: 60rem
-  max-width: 90%
-  box-sizing: border-box
-  height: max-content
-  box-shadow: var(--default-box-shadow)
-  border-radius: var(--border-radius-small)
-  padding: var(--padding-normal)
-  background-color: var(--widget-background-color)
 
   .highlighted
     color: var(--font-color-highlighted)
