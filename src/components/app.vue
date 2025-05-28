@@ -8,7 +8,6 @@
 <template lang="pug">
 teleport(to="head")
   title {{title}}
-  link(rel="icon" type="image/png" :href="favIcon")
 loader(:visible="loaderVisible")
 router-view
 </template>
@@ -17,7 +16,6 @@ router-view
 import {computed} from 'vue';
 
 import Api from '@/scripts/api.js';
-import favIcon from '@/assets/favicon.png';
 import Loader from "@/components/widgets/loader.vue";
 
 export default {
@@ -35,11 +33,6 @@ export default {
       currentUser: computed(() => this.currentUser),
       setTitle: title => this.title = title,
       api
-    };
-  },
-  setup() {
-    return {
-      favIcon
     };
   },
   data() {
