@@ -92,7 +92,7 @@ export default {
       width: 100%
       height: var(--img-size)
       grid-template-columns: var(--img-size) calc(100% - var(--img-size) - var(--margin-normal))  // 2 columns
-      grid-template-rows: 30% 20% 20% 30%   // 4 rows
+      grid-template-rows: 25% 20% 20% 35%   // 4 rows
       column-gap: var(--margin-normal)
 
       > img
