@@ -50,9 +50,8 @@ export default {
 
 <style lang="sass" scoped>
 .welcome
-  display: flex
-  flex-flow: column
   width: 100%
+  height: max-content
 
   > *
     margin-left: auto
