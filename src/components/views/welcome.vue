@@ -6,12 +6,17 @@
 -->
 
 <template lang="pug">
-span Welcome
+slide-show(configJson="/resources/slides.json")
 </template>
 
 <script>
+import SlideShow from "@/components/widgets/slide-show.vue";
+
 export default {
   name: 'Welcome',
+  components: {
+    SlideShow
+  },
   inject: ['api'],
   async mounted() {
     console.log(await this.api.healthcheck());
@@ -19,6 +24,9 @@ export default {
 };
 </script>
 
-<style lang="sass">
-
+<style lang="sass" scoped>
+.slide-show
+  margin-left: auto
+  margin-right: auto
+  margin-top: var(--margin-normal)
 </style>
