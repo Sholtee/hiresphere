@@ -130,14 +130,14 @@ function queryJobs(queryExtension, description, params) {
       FROM job j 
       ${queryExtension}
     )
-      SELECT j.*, t.value, t.color FROM job_tmp j
+      SELECT j.*, t.value FROM job_tmp j
       JOIN tag t ON t.job_id = j.id`;
 
   return Object.values(db.prepare(query).all(params).reduce((acc, item) => {
     const {
       id, name, location, company,
       description, logo, created,
-      value, color
+      value
     } = item;
 
     if (!acc[id])
@@ -151,10 +151,7 @@ function queryJobs(queryExtension, description, params) {
         created,
         tags: []
       };
-    acc[id].tags.push({
-      value,
-      color
-    });
+    acc[id].tags.push(value);
 
     return acc;
   }, {}));
