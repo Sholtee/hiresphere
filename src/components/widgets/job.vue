@@ -5,7 +5,7 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-.card(:class="{expanded}" v-once)
+.job.card(:class="{expanded}" v-once)
   .head
     .grid
       img(:src="job.logo" @error="$event.target.src = imagePlaceholder")
@@ -28,6 +28,12 @@ import mdFactory from 'markdown-it';
 
 import imagePlaceholder from '@/assets/company.png';
 
+const md = mdFactory({
+  // disable HTML tags in the input (since it is provided by the user)
+  html: false,
+  breaks: true
+});
+
 export default {
   name: 'Job',
   props: {
@@ -42,11 +48,7 @@ export default {
   setup() {
     return {
       imagePlaceholder,
-      md: mdFactory({
-        // disable HTML tags in the input
-        html: false,
-        breaks: true
-      })
+      md
     };
   },
   methods: {
@@ -64,7 +66,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.card
+.job
   --holder-width: 30rem
 
   .highlighted
