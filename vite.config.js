@@ -28,9 +28,10 @@ export default defineConfig(({mode}) => ({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          // put Vue in a separate JS
-          vue: ['vue']
+        manualChunks(id) {
+          return id.includes('node_modules')
+            ? 'vendor'
+            : 'index';
         }
       }
     },
