@@ -15,7 +15,7 @@
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
-    check-box(id="cb_1")
+    check-box(id="dark-mode" v-model="darkMode")
       .has-icon(data-icon="dark_mode")
   .body
     router-view
@@ -32,7 +32,8 @@ export default {
   inject: ['currentUser'],
   data() {
     return {
-      menuVisible: false
+      menuVisible: false,
+      darkMode: false
     };
   },
   computed: {
@@ -48,6 +49,14 @@ export default {
           icon,
           titleId
         }));
+    }
+  },
+  watch: {
+    darkMode: {
+      handler(val) {
+        window.document.body.classList.toggle('dark', val);
+      },
+      immediate: true
     }
   }
 };
