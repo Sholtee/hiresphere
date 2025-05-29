@@ -63,6 +63,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/functions" as *
 @use "@/styles/mixins" as *
 
 #app-frame
@@ -111,6 +112,7 @@ export default {
       left: var(--margin-small)
       padding: var(--padding-small)
       font-size: 1.5rem
+      color: var(--font-color-highlighted)
 
     > .switch
       @extend .vertically-centered
@@ -158,7 +160,7 @@ export default {
 
         &:hover, &.router-link-exact-active
           border-bottom-color: var(--button-primary-background)
-          background-color: var(--button-active-color)
+          background-color: darken(var(--widget-background-color), 92%)
 
         &:not(:last-of-type)
           margin-right: var(--margin-small)
@@ -187,7 +189,7 @@ export default {
         flex-flow: column
         width: 20rem
         max-width: 80%
-        background-color: white
+        background-color: var(--widget-background-color)
         box-shadow: var(--box-shadow)
         transform: translateX(-101%)
         will-change: transform

@@ -88,7 +88,7 @@ export default {
       > img
         grid-column: 1
         grid-row: 1 / span 4  // A spans all 3 rows
-        background: white
+        background: transparent
         object-fit: contain
         width: 100%
         height: 100%
@@ -160,6 +160,9 @@ export default {
       position: absolute
       right: 0
       top: 0
+
+  > .body
+    background-color: var(--widget-background-color)
 
   > *:not(:first-of-type)
     margin-top: var(--margin-normal)
