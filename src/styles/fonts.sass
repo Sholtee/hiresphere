@@ -6,5 +6,9 @@
 //*********************************
 @use "sass:meta" as *
 
+// do not bloat the distro with unused fonts
+// @include load-css("~/roboto-fontface/css/roboto/roboto-fontface.css")
+$roboto-font-path: '~/roboto-fontface/fonts' !default
+@import "~/roboto-fontface/css/roboto/sass/roboto-fontface-regular"
+
 @include load-css("~/material-design-icons-iconfont/dist/material-design-icons.css")
-@include load-css("~/roboto-fontface/css/roboto/roboto-fontface.css")

@@ -41,7 +41,7 @@ export default defineConfig(({mode}) => ({
     preprocessorOptions: {
       sass: {
         api: 'modern',
-        silenceDeprecations: ['mixed-decls']
+        silenceDeprecations: ['mixed-decls', 'import']
       }
     }
   },
