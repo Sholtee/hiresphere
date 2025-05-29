@@ -1,6 +1,6 @@
 <!--
    File: login.vue
-   Project: login
+   Project: job-ad
 
    Author: Denes Solti
 -->
