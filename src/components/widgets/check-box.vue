@@ -1,6 +1,6 @@
 <!--
    File: check-box.vue
-   Project: login
+   Project: job-ad
 
    Author: Denes Solti
 -->
