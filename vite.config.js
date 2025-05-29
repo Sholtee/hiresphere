@@ -20,7 +20,7 @@ export default defineConfig(({mode}) => ({
     })
   ],
   build: {
-    sourcemap: mode.includes('production') ? 'inline' : false,
+    sourcemap: !mode.includes('production') ? 'inline' : false,
     target: browserslistToEsbuild(null, {
       path: resolve('.', '.browserslist.rc')
     }),
