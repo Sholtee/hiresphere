@@ -104,7 +104,7 @@ export default {
 
   display: flex
   padding: 1rem
-  border: var(--border-size) solid var(--input-boder-color)
+  border: var(--border-size) solid var(--input-border-color)
   border-radius: var(--border-radius-small)
   height: max-content
   max-width: 90%
@@ -118,9 +118,10 @@ export default {
 
   > .has-icon
     height: var(--input-height-mod)
+    color: var(--font-color-highlighted)
 
     &:before
-      border: var(--border-size) solid var(--input-boder-color)
+      border: var(--border-size) solid var(--input-border-color)
       border-right: unset
       border-top-left-radius: var(--border-radius-small)
       border-bottom-left-radius: var(--border-radius-small)
@@ -130,6 +131,7 @@ export default {
       height: 100%
       box-sizing: border-box
       line-height: var(--input-height-mod)
+      background-color: var(--input-extension-background-color)
 
     &.job-or-company
       width: 20rem

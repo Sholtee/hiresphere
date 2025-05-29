@@ -15,17 +15,25 @@
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
+    check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
+      .has-icon(data-icon="dark_mode")
   .body
     router-view
 </template>
 
 <script>
+import CheckBox from "@/components/widgets/check-box.vue";
+
 export default {
   name: 'Layout',
+  components: {
+    CheckBox
+  },
   inject: ['currentUser'],
   data() {
     return {
-      menuVisible: false
+      menuVisible: false,
+      darkMode: false
     };
   },
   computed: {
@@ -41,12 +49,21 @@ export default {
           icon,
           titleId
         }));
+    },
+    prefersDarkMode() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+  },
+  watch: {
+    darkMode(val) {
+      window.document.body.classList.toggle('dark', val);
     }
   }
 };
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/functions" as *
 @use "@/styles/mixins" as *
 
 #app-frame
@@ -62,6 +79,11 @@ export default {
   flex-flow: column
   width: 100%
   height: 100%
+
+  .vertically-centered
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
 
   > .head
     position: relative
@@ -84,13 +106,18 @@ export default {
         z-index: var(--click-trap-z-index)
 
     > .hamburger
-      position: absolute
+      @extend .vertically-centered
+
       display: none
-      top: 50%
-      transform: translateY(-50%)
       left: var(--margin-small)
       padding: var(--padding-small)
       font-size: 1.5rem
+      color: var(--font-color-highlighted)
+
+    > .switch
+      @extend .vertically-centered
+
+      right: var(--padding-normal)
 
     .title
       width: max-content
@@ -107,10 +134,9 @@ export default {
       height: 100%
 
       > .title
-        position: absolute
-        top: 50%
+        @extend .vertically-centered
+
         left: var(--margin-normal)
-        transform: translateY(-50%)
 
         &:before
           color: var(--app-icon-color)
@@ -134,7 +160,7 @@ export default {
 
         &:hover, &.router-link-exact-active
           border-bottom-color: var(--button-primary-background)
-          background-color: var(--button-active-color)
+          background-color: darken(var(--widget-background-color), 92%)
 
         &:not(:last-of-type)
           margin-right: var(--margin-small)
@@ -163,7 +189,7 @@ export default {
         flex-flow: column
         width: 20rem
         max-width: 80%
-        background-color: white
+        background-color: var(--widget-background-color)
         box-shadow: var(--box-shadow)
         transform: translateX(-101%)
         will-change: transform
