@@ -9,7 +9,7 @@
 label.switch(:for="id")
   slot
   .input-holder
-    input(:id="id" type="checkbox" :checked="modelValue" @change="emmitUpdate($event.target.checked)")
+    input(:id="id" type="checkbox" @change="emmitUpdate($event.target.checked)" ref="input")
     .track
 </template>
 
@@ -21,25 +21,27 @@ export default {
       type: String,
       required: true
     },
-    modelValue: {
+    initialValue: {
       type: Boolean,
-      required: true
+      default: false
     }
   },
-  emits: ['update:modelValue'],
+  emits: ['change'],
   computed: {
     storageKey() {
       return `cb:${this.id}`;
     }
   },
-  beforeMount() {
+  mounted() {
     const stored = window.localStorage.getItem(this.storageKey);
-    if (stored)
-      this.emmitUpdate(JSON.parse(stored));
+
+    this.emmitUpdate(this.$refs.input.checked = stored
+      ? JSON.parse(stored)
+      : this.initialValue);
   },
   methods: {
     emmitUpdate(val) {
-      this.$emit('update:modelValue', val);
+      this.$emit('change', val);
       window.localStorage.setItem(this.storageKey, JSON.stringify(val));
     }
   }

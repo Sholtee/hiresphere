@@ -15,7 +15,7 @@
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
-    check-box(id="dark-mode" v-model="darkMode")
+    check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
       .has-icon(data-icon="dark_mode")
   .body
     router-view
@@ -49,14 +49,14 @@ export default {
           icon,
           titleId
         }));
+    },
+    prefersDarkMode() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
   },
   watch: {
-    darkMode: {
-      handler(val) {
-        window.document.body.classList.toggle('dark', val);
-      },
-      immediate: true
+    darkMode(val) {
+      window.document.body.classList.toggle('dark', val);
     }
   }
 };
