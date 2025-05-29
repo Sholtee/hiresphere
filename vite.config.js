@@ -30,7 +30,8 @@ export default defineConfig(({mode}) => ({
       output: {
         manualChunks: {
           // put Vue in a separate JS
-          vue: ['vue']
+          vue: ['vue', 'vue-router', 'vue-toast-notification'],
+          vendor: ['dayjs', 'markdown-it', 'lodash.debounce']
         }
       }
     },
@@ -40,7 +41,7 @@ export default defineConfig(({mode}) => ({
     preprocessorOptions: {
       sass: {
         api: 'modern',
-        silenceDeprecations: ['mixed-decls']
+        silenceDeprecations: ['mixed-decls', 'import']
       }
     }
   },
