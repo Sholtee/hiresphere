@@ -7,15 +7,13 @@
 <template lang="pug">
 infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{renderInitialItems}")
   .search(v-once)
-    input.has-icon(
-      v-for="(input , cls) in searchInputs"
-      :class="cls"
-      :data-icon="input.icon"
-      :placeholder="$resources.language[input.placeholder]"
-      v-model="input.model"
-      v-focus="input.focus"
-      @keyup.enter="loadJobs"
-    )
+    .has-icon(v-for="(input , cls) in searchInputs" :class="cls" :data-icon="input.icon")
+      input(
+        :placeholder="$resources.language[input.placeholder]"
+        v-model="input.model"
+        v-focus="input.focus"
+        @keyup.enter="loadJobs"
+      )
     button.secondary(@click="submitSearch(renderInitialItems)" ref="searchButton") {{$resources.language.SEARCH}}
   .job-holder
     job(v-for="job in jobs" :key="job.id" :job="job")
