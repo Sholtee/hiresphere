@@ -15,13 +15,20 @@
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
+    check-box(id="cb_1")
+      .has-icon(data-icon="dark_mode")
   .body
     router-view
 </template>
 
 <script>
+import CheckBox from "@/components/widgets/check-box.vue";
+
 export default {
   name: 'Layout',
+  components: {
+    CheckBox
+  },
   inject: ['currentUser'],
   data() {
     return {
@@ -63,6 +70,11 @@ export default {
   width: 100%
   height: 100%
 
+  .vertically-centered
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+
   > .head
     position: relative
     height: 4rem
@@ -84,13 +96,17 @@ export default {
         z-index: var(--click-trap-z-index)
 
     > .hamburger
-      position: absolute
+      @extend .vertically-centered
+
       display: none
-      top: 50%
-      transform: translateY(-50%)
       left: var(--margin-small)
       padding: var(--padding-small)
       font-size: 1.5rem
+
+    > .switch
+      @extend .vertically-centered
+
+      right: var(--padding-normal)
 
     .title
       width: max-content
@@ -107,10 +123,9 @@ export default {
       height: 100%
 
       > .title
-        position: absolute
-        top: 50%
+        @extend .vertically-centered
+
         left: var(--margin-normal)
-        transform: translateY(-50%)
 
         &:before
           color: var(--app-icon-color)
