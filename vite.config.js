@@ -28,10 +28,10 @@ export default defineConfig(({mode}) => ({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          return id.includes('node_modules')
-            ? 'vendor'
-            : 'index';
+        manualChunks: {
+          // put Vue in a separate JS
+          vue: ['vue', 'vue-router', 'vue-toast-notification'],
+          vendor: ['dayjs', 'markdown-it', 'lodash.debounce']
         }
       }
     },
