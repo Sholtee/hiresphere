@@ -13,12 +13,8 @@
     .title(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
-      router-link.nav.has-icon(
-        v-for="{name, titleId, icon} in routes"
-        :class="{selected: $router.currentRoute.value.name === name}"
-        :to="{name}"
-        :data-icon="icon"
-      ) {{$resources.language[titleId]}}
+      router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
+        | {{$resources.language[titleId]}}
   .body
     router-view
 </template>
@@ -136,7 +132,7 @@ export default {
         color: var(--font-color-highlighted)
         text-decoration: none
 
-        &:hover, &.selected
+        &:hover, &.router-link-exact-active
           border-bottom-color: var(--button-primary-background)
           background-color: var(--button-active-color)
 
@@ -202,7 +198,7 @@ export default {
           will-change: border-right-color
           transition: border-right-color var(--default-transition-len)
 
-          &:hover, &.selected
+          &:hover, &.router-link-exact-active
             border-right-color: var(--button-primary-background)
 
   > .body
