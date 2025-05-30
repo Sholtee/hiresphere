@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import timeout from "@/scripts/timeout.js";
+
 export default {
   name: 'SlideShow',
   props: {
@@ -76,7 +78,8 @@ export default {
       const {cls} = this.images[index];
 
       cls[shifter] = true;
-      await timeout(100);
+      // wait for DOM update to be done ($nextTick() is not enough)
+      await timeout(1);
       cls['transform-start'] = true;
     },
     loadNextImg() {
@@ -95,10 +98,6 @@ export default {
     }
   }
 };
-
-function timeout(ms) {
-  return new Promise(resolve => window.setTimeout(resolve, ms));
-}
 </script>
 
 <style lang="sass" scoped>
