@@ -15,7 +15,12 @@ export default defineConfig({
     specPattern: ['tests/cypress/e2e/specs/**/*.cy.js'],
     baseUrl: 'http://localhost:4173'
   },
+  reporter: 'mocha-junit-reporter',
+  reporterOptions: {
+    mochaFile: './artifacts/cypress/test-results.xml',
+    toConsole: false
+  },
   defaultCommandTimeout: 4000,
-  screenshotsFolder: './artifacts/screenshots/',
-  videosFolder: './artifacts/videos/'
+  screenshotsFolder: './artifacts/cypress/screenshots/',
+  videosFolder: './artifacts/cypress/videos/'
 });
