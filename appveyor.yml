@@ -29,4 +29,8 @@ test_script:
 after_test:
   - ps: |
       $client = New-Object System.Net.WebClient
-      $client.UploadFile("https://ci.appveyor.com/api/testresults/junit/$Env:APPVEYOR_JOB_ID", (Resolve-Path ".\artifacts\cypress\test-results.xml"))     
+      
+      Get-ChildItem -Path ".\artifacts\cypress\test-results.*.xml" | foreach {
+        Write-Host "Uploading test result: $($_.Name)"
+        $client.UploadFile("https://ci.appveyor.com/api/testresults/junit/$Env:APPVEYOR_JOB_ID", $_.FullName)
+      }

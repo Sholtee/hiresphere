@@ -23,6 +23,7 @@ infinite-scroll.jobs(top=".search" :render-next-page="nextPage" v-slot="{renderI
 import InfiniteScroll from "@/components/widgets/infinite-scroll.vue";
 import InputBox from "@/components/widgets/input-box.vue";
 import Job from '@/components/widgets/job.vue';
+import timeout from "@/scripts/timeout.js";
 
 export default {
   name: 'Jobs',
@@ -74,8 +75,8 @@ export default {
 
       this.jobs = [];
 
-      // wait for DOM cleanup to be done
-      await this.$nextTick();
+      // $nextTick() is not enough. FIXME: investigate why
+      await timeout(50);
 
       renderInitialItems();
     },
