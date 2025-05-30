@@ -45,4 +45,9 @@ describe('Jobs view', () => {
     cy.get('.fab-up').should('exist').click();
     firstJob().should('be.visible');
   });
+
+  it('should navigate to the job detailer', () => {
+    cy.get('.job:nth-of-type(1) button').should('have.text', 'More details').click();
+    cy.url().should('match', /\/job\/\d+$/);
+  });
 });
