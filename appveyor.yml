@@ -30,7 +30,7 @@ after_test:
   - ps: |
       $client = New-Object System.Net.WebClient
       
-      Get-ChildItem -Path ".\artifacts\cypress\test-results.*.xml") | foreach {
+      Get-ChildItem -Path ".\artifacts\cypress\test-results.*.xml" | foreach {
         Write-Host "Uploading test result: $($_.Name)"
-        $client.UploadFile("https://ci.appveyor.com/api/testresults/nunit/$Env:APPVEYOR_JOB_ID", $_.FullName)
+        $client.UploadFile("https://ci.appveyor.com/api/testresults/junit/$Env:APPVEYOR_JOB_ID", $_.FullName)
       }
