@@ -43,7 +43,7 @@ export default {
   },
   async beforeMount() {
     this.setTitle(this.$resources.language.TITLE_HOME);
-    this.content = md.render(await (await window.fetch('/resources/welcome.md')).text());
+    this.content = md.render(await (await fetch('/resources/welcome.md')).text());
   }
 };
 </script>

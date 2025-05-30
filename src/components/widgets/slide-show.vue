@@ -48,9 +48,7 @@ export default {
           id,
           src,
           cls: {},
-          click() {
-            window.location.href = href;
-          }
+          click: () => this.$router.push(href)
         }));
         this.active = 0;
       },
