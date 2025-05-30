@@ -1,6 +1,6 @@
 /*
  * File: jobs.cy.js
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */

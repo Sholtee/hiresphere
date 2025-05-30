@@ -1,6 +1,6 @@
 /*
  * File: router.js
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */

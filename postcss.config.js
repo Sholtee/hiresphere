@@ -1,6 +1,6 @@
 /*
  * File: postcss.config.js
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */
