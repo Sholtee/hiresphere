@@ -17,7 +17,7 @@ export default defineConfig({
   },
   reporter: 'mocha-junit-reporter',
   reporterOptions: {
-    mochaFile: './artifacts/cypress/test-results.xml',
+    mochaFile: './artifacts/cypress/test-results.[hash].xml',
     toConsole: false
   },
   defaultCommandTimeout: 4000,
