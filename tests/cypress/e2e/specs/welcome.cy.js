@@ -1,12 +1,12 @@
 /*
- * File: landing-page.cy.js
+ * File: welcome.cy.js
  * Project: job-ad
  *
  * Author: Denes Solti
  */
 
 /* eslint-disable no-undef */
-describe('Landing page', () => {
+describe('Welcome view', () => {
   beforeEach(() => {
     cy.visit('/');
   });
@@ -18,18 +18,18 @@ describe('Landing page', () => {
   });
 
   it('should contain a slide show', () => {
-    cy.get('.slide-show').then(ss => {
-      ss = cy.wrap(ss);
+    cy.get('.slide-show').then($ss => {
+      const ss = cy.wrap($ss);
 
       ss.get('img').should('have.length.gt', 1);
 
-      ss.get('img.visible').should('have.length', 1).then(originalImg => {
+      ss.get('img.visible').should('have.length', 1).then($originalImg => {
         ss.get('.material-icons').contains('arrow_forward_ios').click();
 
-        cy.wrap(originalImg).should('not.have.class', 'visible');
+        cy.wrap($originalImg).should('not.have.class', 'visible');
 
-        ss.get('img.visible').should('have.length', 1).then(newImage => {
-          expect(originalImg.attr('src')).not.to.equal(newImage.attr('src'));
+        ss.get('img.visible').should('have.length', 1).then($newImage => {
+          expect($originalImg.attr('src')).not.to.equal($newImage.attr('src'));
         });
       });
     });
