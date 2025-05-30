@@ -25,3 +25,8 @@ before_test:
 
 test_script:
   - ps: npm run cypress:run
+
+after_test:
+  - ps: |
+      $client = New-Object System.Net.WebClient
+      $client.UploadFile("https://ci.appveyor.com/api/testresults/junit/$Env:APPVEYOR_JOB_ID", (Resolve-Path ".\artifacts\cypress\test-results.xml"))     
