@@ -5,7 +5,7 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-infinite-scroll(top=".search" :render-next-page="nextPage" v-slot="{renderInitialItems}")
+infinite-scroll.jobs(top=".search" :render-next-page="nextPage" v-slot="{renderInitialItems}")
   .search(v-once)
     input-box.job-or-company(v-model="jobOrCompany"
       icon="domain" :placeholder="$resources.language.SEARCH_JOB_OR_COMPANY" @keyup.enter="loadJobs" focus)
