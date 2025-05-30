@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted() {
-    const stored = window.localStorage.getItem(this.storageKey);
+    const stored = localStorage.getItem(this.storageKey);
 
     this.emmitUpdate(this.$refs.input.checked = stored
       ? JSON.parse(stored)
@@ -42,7 +42,7 @@ export default {
   methods: {
     emmitUpdate(val) {
       this.$emit('change', val);
-      window.localStorage.setItem(this.storageKey, JSON.stringify(val));
+      localStorage.setItem(this.storageKey, JSON.stringify(val));
     }
   }
 };
@@ -50,6 +50,7 @@ export default {
 
 <style lang="sass" scoped>
 @import "@/styles/functions"
+
 .switch
   display: flex
   color: var(--font-color-highlighted)

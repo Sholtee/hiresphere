@@ -56,7 +56,7 @@ export default {
   },
   watch: {
     darkMode(val) {
-      window.document.body.classList.toggle('dark', val);
+      document.body.classList.toggle('dark', val);
     }
   }
 };
