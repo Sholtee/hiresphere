@@ -23,8 +23,10 @@
     "@vitejs/plugin-vue": "^5.2.4",
     "autoprefixer": "^10.4.21",
     "browserslist-to-esbuild": "^2.1.1",
+    "cypress": "^14.4.0",
     "eslint": "^9.27.0",
     "eslint-plugin-vue": "^10.1.0",
+    "mocha-junit-reporter": "^2.2.1",
     "pug": "^3.0.3",
     "sass": "^1.89.0",
     "start-server-and-test": "^2.0.12",
@@ -40,9 +42,11 @@
     "fakeapi": "npm --prefix \"./scripts/fake-api\" run start",
     "start-servers": "start-server-and-test fakeapi http://localhost:1986/api/v1/ vite",
     "serve": "npm run lint & npm run start-servers",
-    "start-servers-preview": "start-server-and-test fakeapi http://localhost:1986/api/v1/ \"vite preview\"",
-    "preview": "npm run build & npm run start-servers-preview",
+    "start-servers:preview": "start-server-and-test fakeapi http://localhost:1986/api/v1/ \"vite preview\"",
+    "preview": "npm run build & npm run start-servers:preview",
     "build": "npm run lint && vite build",
-    "lint": "npx eslint \"./src/**\" --config \"./eslint.config.js\""
+    "lint": "npx eslint \"./src/**\" --config \"./eslint.config.js\"",
+    "cypress:open": "start-server-and-test preview http://localhost:4173/ \"cypress open\"",
+    "cypress:run": "start-server-and-test preview http://localhost:4173/ \"cypress run\""
   }
 }
