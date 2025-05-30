@@ -1,6 +1,6 @@
 /*
  * File: e2e.js
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */

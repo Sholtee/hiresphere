@@ -1,6 +1,6 @@
 <!--
    File: not-found.vue
-   Project: job-ad
+   Project: HireSphere
 
    Author: Denes Solti
 -->

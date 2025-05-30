@@ -1,6 +1,6 @@
 <!--
    File: slide-show.vue
-   Project: job-ad
+   Project: HireSphere
 
    Author: Denes Solti
 -->

@@ -1,6 +1,6 @@
 /*
  * File: toast.js
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */

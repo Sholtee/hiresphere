@@ -1,6 +1,6 @@
 <!--
    File: input-box.vue
-   Project: job-ad
+   Project: HireSphere
 
    Author: Denes Solti
 -->

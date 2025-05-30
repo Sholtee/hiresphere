@@ -1,6 +1,6 @@
 /*
  * File: test-data.sql
- * Project: job-ad
+ * Project: HireSphere
  *
  * Author: Denes Solti
  */
