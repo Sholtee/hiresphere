@@ -1,0 +1,26 @@
+#############################################################################
+#                                                                           #
+# File: appveyor.yml                                                        #
+# Project: HireSphere                                                       #
+#                                                                           #
+# Author: Denes Solti                                                       #
+#                                                                           #
+#############################################################################
+image: Visual Studio 2022
+
+branches:
+  except:
+    - gh-pages
+
+build: off
+
+clone_script:
+  - cmd: |
+      git clone -q --recursive --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+      git checkout -qf %APPVEYOR_REPO_COMMIT%
+
+before_test:
+  - cmd: npm install
+
+test_script:
+  - ps: npm run cypress:run
