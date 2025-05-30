@@ -1,4 +1,6 @@
 # HireSphere Portal (Kibit Home Assignment)
+[![Build status](https://ci.appveyor.com/api/projects/status/e1xehleqr7yn7do9/branch/main?svg=true)](https://ci.appveyor.com/project/Sholtee/hiresphere/branch/main)
+![AppVeyor tests](https://img.shields.io/appveyor/tests/sholtee/hiresphere/main)
 
 ## Prerequisites
 - Node.js v22.12.0+
