@@ -13,15 +13,13 @@
     @transitionend="imgTransitionEnd(image)"
     @click="image.click"
   )
-  .timer
+  .timer(ref="timer")
     .bar(:style="barStyle" @transitionend="loadNextImg")
   button.material-icons(v-if="images.length > 1" @click="loadPrevImg" :disabled="inTransition") arrow_back_ios
   button.material-icons(v-if="images.length > 1" @click="loadNextImg" :disabled="inTransition") arrow_forward_ios
 </template>
 
 <script>
-import timeout from "@/scripts/timeout.js";
-
 export default {
   name: 'SlideShow',
   props: {
@@ -45,6 +43,9 @@ export default {
   watch: {
     configJson: {
       async handler(config) {
+        this.active = 0;
+        this.stopCountDown();
+
         const images = await (await fetch(config)).json();
         this.images = images.map(({src, href}, id) => ({
           id,
@@ -52,16 +53,19 @@ export default {
           cls: {},
           click: () => this.$router.push(href)
         }));
-        this.active = 0;
+
+        await this.ensureTimerSizedProperly();
+        this.startCountdown();
       },
       immediate: true
     }
   },
-  async mounted() {
-    await timeout(100);
-    this.startCountdown();
-  },
   methods: {
+    async ensureTimerSizedProperly() {
+      await this.$nextTick();
+      // reading the computed "width" ensures that the element is rendered
+      window.getComputedStyle(this.$refs.timer).width;
+    },
     imgTransitionEnd(img) {
       img.cls = {};
 
@@ -71,15 +75,12 @@ export default {
     },
     async loadImg(index, shifter) {
       this.inTransition = true;
-
-      // reset the countdown
-      this.barStyle = {};
+      this.stopCountDown();
 
       const {cls} = this.images[index];
 
       cls[shifter] = true;
-      // wait for DOM update to be done ($nextTick() is not enough)
-      await timeout(1);
+      await this.ensureTimerSizedProperly();
       cls['transform-start'] = true;
     },
     loadNextImg() {
@@ -95,6 +96,9 @@ export default {
         transition: `width ${this.timeout}s`,
         width: '100%'
       };
+    },
+    stopCountDown() {
+      this.barStyle = {};
     }
   }
 };
