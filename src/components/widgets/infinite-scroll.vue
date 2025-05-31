@@ -26,6 +26,12 @@ export default {
       required: true
     }
   },
+  setup() {
+    return {
+      // does not have to be reactive
+      inInitPhase: false
+    };
+  },
   data() {
     return {
       fabVisible: false
@@ -40,6 +46,9 @@ export default {
   },
   methods: {
     onScroll() {
+      if (this.inInitPhase)
+        return;
+
       const {holder: {scrollHeight, scrollTop, clientHeight}} = this.$refs;
 
       if (scrollHeight - scrollTop - clientHeight < 1)
@@ -48,10 +57,16 @@ export default {
       this.fabVisible = scrollTop > 20;
     },
     async renderInitialItems() {
-      const {holder} = this.$refs;
+      this.inInitPhase = true;
 
-      while (holder.scrollHeight <= holder.clientHeight && await this.renderNextPage()) {
-        await this.$nextTick();
+      try {
+        const {holder} = this.$refs;
+
+        do {
+          await this.$nextTick();
+        } while (holder.scrollHeight <= holder.clientHeight && await this.renderNextPage());
+      } finally {
+        this.inInitPhase = false;
       }
     },
     scrollToTop() {
