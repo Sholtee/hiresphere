@@ -51,9 +51,24 @@ root
 ## Running the debug server
 - `npm run serve` (this will execute the linter checks as well as starts the fake API)
 
+### Features implemented
+- landing page
+- job search
+- job detailer
+- log in (as an employer), log out
+- dark mode
+- slide show for highlighted jobs
+- endless scrolling (there is no pager, new posts are loaded as you scrolling down)
+- mobile view
+- fake backend (for testing)
+
 ## Log in as an employer
 - use `test@employer[1|2|3].hu` as username
 - password can be anything
-- 
+
 ## Running the E2E tests
 - `npm run cypress:open` (this will start the fake API and feeds [Cypress](https://www.cypress.io/) with the **production** assets)
+
+## Screenshots
+![Jobs](docs/jobs.png)
+![Jobs-Mobile](docs/jobs-mobile.png)
