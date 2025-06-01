@@ -17,7 +17,7 @@ const routes = [
       // if the user is logged in go to the editor else show the welcome screen
       if (to.path === '/')
         return next({
-          name: to.requestor.isAnonymous ? 'Welcome' : 'ListJobs'
+          name: to.requestor.isAnonymous ? 'Welcome' : 'ListYourJobs'
         });
 
       next();
@@ -43,8 +43,20 @@ const routes = [
           nav: {
             titleId: 'TITLE_JOBS',
             icon: 'work'
-          }
-          // both guests and job posters are allowed to visit
+          },
+          requiredRoles: ['guest']
+        }
+      },
+      {
+        path: '/yourjobs',
+        name: 'ListYourJobs',
+        component: () => import('@/components/views/jobs.vue'),
+        meta: {
+          nav: {
+            titleId: 'TITLE_YOUR_JOBS',
+            icon: 'work'
+          },
+          requiredRoles: ['employer']
         }
       },
       {

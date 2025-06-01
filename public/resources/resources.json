@@ -14,7 +14,8 @@
     "SEARCH_LOCATION": "Location...",
     "TITLE_HOME": "Home",
     "TITLE_JOBS": "Jobs",
-    "TITLE_LOGIN": "Login"
+    "TITLE_LOGIN": "Login",
+    "TITLE_YOUR_JOBS": "Your Jobs"
   },
   "DATE_FMT": "MMM DD."
 }

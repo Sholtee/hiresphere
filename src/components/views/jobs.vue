@@ -46,7 +46,9 @@ export default {
     };
   },
   beforeMount() {
-    this.setTitle(this.$resources.language.TITLE_JOBS);
+    const {setTitle, $resources: {language}, $router} = this;
+
+    setTitle(language[$router.currentRoute.value.meta.nav.titleId]);
   },
   mounted() {
     this.loadJobs();
