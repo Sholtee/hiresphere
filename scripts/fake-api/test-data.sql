@@ -6,10 +6,6 @@
  */
 BEGIN;
 
-CREATE TABLE role(id INTEGER PRIMARY KEY, name TEXT CHECK(LENGTH(name) <= 20));
-CREATE UNIQUE INDEX idx_role_name ON role(name);
-INSERT INTO role(name) VALUES ('employer');
-
 CREATE TABLE user(id INTEGER PRIMARY KEY, name TEXT);
 CREATE UNIQUE INDEX idx_user_name ON user(name);
 INSERT INTO user(name) VALUES

@@ -4,7 +4,9 @@
   "type": "module",
   "dependencies": {
     "better-sqlite3": "^11.10.0",
-    "express": "^5.1.0"
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "engines": {
     "node": ">=v22.12.0"
