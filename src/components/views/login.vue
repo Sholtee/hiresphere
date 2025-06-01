@@ -7,7 +7,7 @@
 
 <template lang="pug">
 .login(v-once)
-  input-box(v-model="email"
+  input-box(type="text" v-model="email"
     icon="account_circle" :placeholder="$resources.language.LOGIN_USERNAME" @keyup.enter="login" focus)
   input-box(type="password" v-model="password"
     icon="password" :placeholder="$resources.language.LOGIN_PASSWORD" @keyup.enter="login")
