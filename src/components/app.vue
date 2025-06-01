@@ -41,8 +41,6 @@ export default {
   data() {
     return {
       title: '',
-      // api calls might run parallel -> do not use bool
-      loaderVisible: 0,
       darkMode: false
     };
   },
