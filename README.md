@@ -51,5 +51,9 @@ root
 ## Running the debug server
 - `npm run serve` (this will execute the linter checks as well as starts the fake API)
 
+## Log in as an employer
+- use `test@employer[1|2|3].hu` as username
+- password can be anything
+- 
 ## Running the E2E tests
 - `npm run cypress:open` (this will start the fake API and feeds [Cypress](https://www.cypress.io/) with the **production** assets)
