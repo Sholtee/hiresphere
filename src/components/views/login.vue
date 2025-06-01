@@ -22,7 +22,7 @@ export default {
   components: {
     InputBox
   },
-  inject: ['setTitle'],
+  inject: ['setTitle', 'toast'],
   data() {
     return {
       email: '',
@@ -42,7 +42,10 @@ export default {
         });
 
       if (status !== 'ok') {
-        this.$toast.error(reason);
+        this.toast({
+          message: reason,
+          type: 'error'
+        });
         return;
       }
 

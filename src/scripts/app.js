@@ -9,13 +9,8 @@ import {createApp} from 'vue';
 import api from "@/scripts/api.js";
 import App from '@/components/app.vue';
 import router from '@/scripts/router.js';
-import toast from '@/scripts/toast.js';
 
-const app = createApp(App)
-  .use(router)
-  .use(toast, {
-    position: 'bottom-right'
-  });
+const app = createApp(App).use(router);
 
 Object.assign(app.config.globalProperties, {
   $api: api,

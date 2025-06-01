@@ -9,6 +9,7 @@
 teleport(to="head")
   title {{title}}
 loader(:visible="$api.busy")
+toast(ref="toast")
 .frame-holder
   router-view
 .foot
@@ -21,17 +22,20 @@ import {computed} from "vue";
 
 import CheckBox from "@/components/widgets/check-box.vue";
 import Loader from "@/components/widgets/loader.vue";
+import Toast from "@/components/widgets/toast.vue";
 
 export default {
   name: 'App',
   components: {
+    Toast,
     CheckBox,
     Loader
   },
   provide() {
     return {
       currentUser: computed(() => this.$router.currentRoute.value.requestor),
-      setTitle: title => this.setTitle(title)
+      setTitle: title => this.setTitle(title),
+      toast: (...args) => this.toast(...args)
     };
   },
   data() {
@@ -53,12 +57,18 @@ export default {
     }
   },
   beforeCreate() {
-    this.$api.addEventListener('error', ({detail: {error}}) => this.$toast.error(error.toString()));
+    this.$api.addEventListener('error', ({detail: {error}}) => this.toast({
+      message: error.toString(),
+      type: 'error'
+    }));
   },
   methods: {
     setTitle(title) {
       const {$resources: {language: {APP_TITLE_SHORT}}} = this;
       this.title = title ? `${APP_TITLE_SHORT} | ${title}` : APP_TITLE_SHORT;
+    },
+    toast(...args) {
+      return this.$refs.toast.show(...args);
     }
   }
 };
@@ -75,7 +85,7 @@ export default {
   width: 100vw
   background-color: var(--app-bg)
 
-  > *
+  > .frame-holder, .foot
     position: relative
 
   > .frame-holder
