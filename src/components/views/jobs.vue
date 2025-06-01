@@ -31,7 +31,7 @@ export default {
     InfiniteScroll,
     Job
   },
-  inject: ['api', 'setTitle'],
+  inject: ['setTitle'],
   setup() {
     // data that don't need to be reactive
     return {
@@ -46,14 +46,16 @@ export default {
     };
   },
   beforeMount() {
-    this.setTitle(this.$resources.language.TITLE_JOBS);
+    const {setTitle, $resources: {language}, $router} = this;
+
+    setTitle(language[$router.currentRoute.value.meta.nav.titleId]);
   },
   mounted() {
     this.loadJobs();
   },
   methods: {
     async nextPage() {
-      const fetchedPage = await this.api.listJobs(this.searchParams);
+      const fetchedPage = await this.$api.listJobs(this.searchParams);
       if (!fetchedPage.length)
         return false;
 
@@ -87,12 +89,9 @@ export default {
 @use "@/styles/mixins" as *
 
 .search
-  --border-size: 1px
-  --input-height-mod: calc(var(--input-height) + .5rem)
-
   display: flex
   padding: 1rem
-  border: var(--border-size) solid var(--input-border-color)
+  border: 1px solid var(--input-border-color)
   border-radius: var(--border-radius-small)
   height: max-content
   max-width: 90%
@@ -110,7 +109,7 @@ export default {
     &.location
       width: 10rem
 
-  +media-max-width-50
+  +media-max-width-55
     flex-flow: column
 
     > .input-holder

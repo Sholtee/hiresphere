@@ -10,30 +10,25 @@
   .head
     .click-trap(@click="menuVisible = false" v-if="menuVisible")
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
-    .title(v-once) {{$resources.language.APP_TITLE}}
+    .title.title-low-width(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
-    check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
-      .has-icon(data-icon="dark_mode")
+    .controls
+      button.material-icons(v-if="currentUser.isAnonymous" @click="$router.push({name: 'Login'})") account_circle
+      button.material-icons(v-else @click="logout") login
   .body
     router-view
 </template>
 
 <script>
-import CheckBox from "@/components/widgets/check-box.vue";
-
 export default {
   name: 'Layout',
-  components: {
-    CheckBox
-  },
   inject: ['currentUser'],
   data() {
     return {
-      menuVisible: false,
-      darkMode: false
+      menuVisible: false
     };
   },
   computed: {
@@ -49,14 +44,13 @@ export default {
           icon,
           titleId
         }));
-    },
-    prefersDarkMode() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
   },
-  watch: {
-    darkMode(val) {
-      document.body.classList.toggle('dark', val);
+  methods: {
+    async logout() {
+      await this.$api.logout();
+      // do not use $router.push() as we want a full reload
+      window.location.href = '/';
     }
   }
 };
@@ -74,7 +68,7 @@ export default {
   --icon-size-large: 7rem
   --no-border: 0 solid transparent
 
-  position: relative
+  position: absolute
   display: flex
   flex-flow: column
   width: 100%
@@ -96,7 +90,7 @@ export default {
     > .click-trap
       display: none
 
-      +media-max-width-50
+      +media-max-width-55
         position: fixed
         display: block
         left: 0
@@ -114,17 +108,25 @@ export default {
       font-size: 1.5rem
       color: var(--font-color-highlighted)
 
-    > .switch
+    > .controls
       @extend .vertically-centered
 
+      display: flex
+      flex-flow: row
       right: var(--padding-normal)
+
+      > *:not(:last-child)
+        margin-right: var(--margin-normal)
+
+      > .material-icons
+        font-size: var(--icon-size-default)
 
     .title
       width: max-content
       font-size: 1.5rem
       color: var(--font-color-disabled)
 
-    > .title
+    > .title-low-width
       display: none
 
     > .details
@@ -136,7 +138,7 @@ export default {
       > .title
         @extend .vertically-centered
 
-        left: var(--margin-normal)
+        left: var(--padding-normal)
 
         &:before
           color: var(--app-icon-color)
@@ -171,11 +173,11 @@ export default {
         &:last-of-type
           margin-right: auto
 
-    +media-max-width-50
+    +media-max-width-55
       > .hamburger
         display: block
 
-      > .title
+      > .title-low-width
         position: absolute
         display: block
         left: 50%

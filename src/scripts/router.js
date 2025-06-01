@@ -6,11 +6,22 @@
  */
 import {createRouter, createWebHistory} from 'vue-router';
 
+import api from './api.js';
+
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: () => import('@/components/views/layout.vue'),
+    beforeEnter: (to, from, next) => {
+      // if the user is logged in go to the editor else show the welcome screen
+      if (to.path === '/')
+        return next({
+          name: to.requestor.isAnonymous ? 'Welcome' : 'ListYourJobs'
+        });
+
+      next();
+    },
     children: [
       {
         path: '/welcome',
@@ -32,24 +43,36 @@ const routes = [
           nav: {
             titleId: 'TITLE_JOBS',
             icon: 'work'
-          }
-          // both guests and job posters are allowed to visit
+          },
+          requiredRoles: ['guest']
+        }
+      },
+      {
+        path: '/yourjobs',
+        name: 'ListYourJobs',
+        component: () => import('@/components/views/jobs.vue'),
+        meta: {
+          nav: {
+            titleId: 'TITLE_YOUR_JOBS',
+            icon: 'work'
+          },
+          requiredRoles: ['employer']
         }
       },
       {
         path: '/job/:jobId',
         name: 'Job',
         component: () => import('@/components/views/job-details.vue')
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/components/views/login.vue'),
+        meta: {
+          requiredRoles: ['guest']
+        }
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/components/views/login.vue'),
-    meta: {
-      requiredRoles: ['guest']
-    }
   },
   {
     path: '/:pathMatch(.*)*',
@@ -63,16 +86,11 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  let user = localStorage.getItem('user');
-  user = user ? JSON.parse(user) : {
-    roles: ['guest']
-  };
-
-  to.meta.user = user;
+router.beforeEach(async (to, from, next) => {
+  to.requestor = await api.getUser();
 
   // if no "requiredRoles" is defined then every user allowed to visit the route
-  if (to.meta.requiredRoles?.some(role => user.roles.includes(role)) === false)
+  if (to.meta.requiredRoles?.some(role => to.requestor.roles.includes(role)) === false)
     return next({
       name: 'NotFound'
     });

@@ -1,44 +1,17 @@
 /*
- * File: index.js
+ * File: job-controller.js
  * Project: HireSphere
  *
  * Author: Denes Solti
  */
-import {readFileSync, statSync} from 'node:fs';
-import {createServer} from 'http';
-
-import Database from 'better-sqlite3';
 import express from 'express';
+import {db} from '../services/db.js';
 
-const
-  db = new Database('./fakeapi.db'),
-  app = express();
+export const jobController = express.Router();
 
-if (!statSync(db.name).size) {
-  db.exec(readFileSync('./test-data.sql', {
-    encoding: 'utf8',
-    flag: 'r'
-  }));
-
-  console.log(`${db.prepare('SELECT COUNT(*) AS count FROM job').get().count} job(s) created`);
-}
-
-app
-  // parse json body
-  .use(express.json())
-  .use((req, res, next) => {
-    // TODO: define "user" on "req"
-    next();
-  });
-
-app.get('/api/v1/', (req, res) => {
-  res.setHeader('content-type', 'application/json');
-  res.status(200);
-  res.send(JSON.stringify('Hello world!'));
-});
-
-app.get('/api/v1/job/:jobId', (req, res) => {
-  const {user: {id: userId} = {}, params: {jobId}} = req;
+jobController.get('/job/:jobId', (req, res) => {
+  // "user" cannot be destructured as it is never undefined
+  const {user, params: {jobId}} = req;
 
   let
     params = {
@@ -47,11 +20,11 @@ app.get('/api/v1/job/:jobId', (req, res) => {
     queryExtension = 'WHERE j.id = @jobId';
 
   // when an employer is logged in, return its own jobs only
-  if (typeof userId === 'number') {
+  if (typeof user?.id === 'number') {
     queryExtension += ' AND j.user_id = @userId';
     params = {
       ...params,
-      userId
+      userId: user.id
     };
   }
 
@@ -67,8 +40,8 @@ app.get('/api/v1/job/:jobId', (req, res) => {
   res.send(JSON.stringify(result[0]));
 });
 
-app.post('/api/v1/jobs', (req, res) => {
-  const {user: {id: userId} = {}} = req;
+jobController.post('/jobs', (req, res) => {
+  const userId = req.user?.id;
 
   let
     {page = 0, jobOrCompany = '', location = ''} = req.body,
@@ -118,8 +91,6 @@ app.post('/api/v1/jobs', (req, res) => {
   res.status(200);
   res.send(JSON.stringify(result));
 });
-
-createServer({}, app).listen(1986);
 
 function queryJobs(queryExtension, description, params) {
   const query = `

@@ -8,7 +8,7 @@
 <template lang="pug">
 .input-holder.has-icon(v-bind="{class: $attrs.class, 'data-icon': $attrs.icon}")
   input(
-    v-bind="{placeholder: $attrs.placeholder, ...eventListeners}"
+    v-bind="{placeholder: $attrs.placeholder, type: $attrs.type, ...eventListeners}"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
     ref="input"
@@ -47,11 +47,13 @@ export default {
 
 <style lang="sass" scoped>
 .input-holder
+  --input-height-mod: calc(var(--input-height) + .5rem)
+
   height: var(--input-height-mod)
   color: var(--font-color-highlighted)
 
   &:before
-    border: var(--border-size) solid var(--input-border-color)
+    border: 1px solid var(--input-border-color)
     border-right: unset
     border-top-left-radius: var(--border-radius-small)
     border-bottom-left-radius: var(--border-radius-small)

@@ -85,7 +85,7 @@ export default {
       &:not(:last-of-type)
         margin-right: var(--margin-large)
 
-    +media-max-width-50
+    +media-max-width-55
       flex-flow: column
 
       > .text-box

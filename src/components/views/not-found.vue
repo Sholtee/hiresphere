@@ -27,7 +27,7 @@ export default {
   height: 90%
   max-width: 30rem
   max-height: 25rem
-  background: white
+  background: var(--widget-background-color)
   border-radius: var(--border-radius-large)
   box-shadow: var(--default-box-shadow)
   padding: var(--padding-normal)
@@ -35,7 +35,7 @@ export default {
   &:after
     content: "404"
     font-size: 2rem
-    color: rgba(0, 0, 0, .3)
+    color: var(--font-color-highlighted)
 
   > img
     display: block

@@ -14,13 +14,13 @@ root
 │
 └───docs [related documents]
 │
+└───fake-api [Fake-API implementation]
+│
 └───public [static assets that are served as-is (not processed by Vite)]
 │   │
 │   └───resources [i18n]
 │
-└───scripts [Vite plugins & Fake-API]
-│   │
-│   └───fake-api
+└───scripts [Vite plugins]
 │
 └───src [sources root]
 │   │
@@ -44,12 +44,16 @@ root
 - `npm install` (this will install the fake API dependencies as well)
 
 ## Adding custom test data
-- delete the `./scripts/fake-api/fakeapi.db` file if exists
-- edit the [test-data.sql](https://github.com/Sholtee/hiresphere/blob/main/scripts/fake-api/test-data.sql)
+- delete the `./fake-api/fakeapi.db` file if exists
+- edit the [test-data.sql](https://github.com/Sholtee/hiresphere/blob/main/fake-api/test-data.sql)
 - start the debug server
 
 ## Running the debug server
 - `npm run serve` (this will execute the linter checks as well as starts the fake API)
 
+## Log in as an employer
+- use `test@employer[1|2|3].hu` as username
+- password can be anything
+- 
 ## Running the E2E tests
 - `npm run cypress:open` (this will start the fake API and feeds [Cypress](https://www.cypress.io/) with the **production** assets)
