@@ -30,7 +30,7 @@ export default defineConfig(({mode}) => ({
       output: {
         manualChunks: {
           // put Vue in a separate JS
-          vue: ['vue', 'vue-router', 'vue-toast-notification'],
+          vue: ['vue', 'vue-router'],
           vendor: ['dayjs', 'markdown-it', 'lodash.debounce']
         }
       }
