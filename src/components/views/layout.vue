@@ -10,7 +10,7 @@
   .head
     .click-trap(@click="menuVisible = false" v-if="menuVisible")
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
-    .title(v-once) {{$resources.language.APP_TITLE}}
+    .title.title-low-width(v-once) {{$resources.language.APP_TITLE}}
     .details(:class="{visible: menuVisible}" ref="details")
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
@@ -96,7 +96,7 @@ export default {
     > .click-trap
       display: none
 
-      +media-max-width-50
+      +media-max-width-55
         position: fixed
         display: block
         left: 0
@@ -124,7 +124,7 @@ export default {
       font-size: 1.5rem
       color: var(--font-color-disabled)
 
-    > .title
+    > .title-low-width
       display: none
 
     > .details
@@ -171,11 +171,11 @@ export default {
         &:last-of-type
           margin-right: auto
 
-    +media-max-width-50
+    +media-max-width-55
       > .hamburger
         display: block
 
-      > .title
+      > .title-low-width
         position: absolute
         display: block
         left: 50%

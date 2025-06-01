@@ -40,16 +40,20 @@ const routes = [
         path: '/job/:jobId',
         name: 'Job',
         component: () => import('@/components/views/job-details.vue')
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/components/views/login.vue'),
+        meta: {
+          requiredRoles: ['guest'],
+          nav: {
+            titleId: 'TITLE_LOGIN',
+            icon: 'login'
+          }
+        }
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/components/views/login.vue'),
-    meta: {
-      requiredRoles: ['guest']
-    }
   },
   {
     path: '/:pathMatch(.*)*',

@@ -110,7 +110,7 @@ export default {
 .slide-show
   --slide-show-height: 20rem
 
-  +media-max-width-50
+  +media-max-width-55
     --slide-show-height: 10rem
 
   position: relative

@@ -110,7 +110,7 @@ export default {
     &.location
       width: 10rem
 
-  +media-max-width-50
+  +media-max-width-55
     flex-flow: column
 
     > .input-holder
