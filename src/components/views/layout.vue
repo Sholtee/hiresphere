@@ -16,7 +16,8 @@
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
     .controls
-      button.material-icons {{currentUser.isAnonymous ? 'account_circle' : 'login'}}
+      button.material-icons(v-if="currentUser.isAnonymous" @click="$router.push({name: 'Login'})") account_circle
+      button.material-icons(v-else @lick="apu.logout()") login
   .body
     router-view
 </template>
@@ -24,8 +25,7 @@
 <script>
 export default {
   name: 'Layout',
-
-  inject: ['currentUser'],
+  inject: ['currentUser', 'api'],
   data() {
     return {
       menuVisible: false
