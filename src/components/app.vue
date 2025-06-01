@@ -9,18 +9,24 @@
 teleport(to="head")
   title {{title}}
 loader(:visible="loaderVisible")
-router-view
+.frame-holder
+  router-view
+.foot
+  check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
+    .has-icon(data-icon="dark_mode")
 </template>
 
 <script>
 import {computed} from 'vue';
 
 import Api from '@/scripts/api.js';
+import CheckBox from "@/components/widgets/check-box.vue";
 import Loader from "@/components/widgets/loader.vue";
 
 export default {
   name: 'App',
   components: {
+    CheckBox,
     Loader
   },
   provide() {
@@ -39,12 +45,16 @@ export default {
     return {
       title: '',
       // api calls might run parallel -> do not use bool
-      loaderVisible: 0
+      loaderVisible: 0,
+      darkMode: false
     };
   },
   computed: {
     currentUser() {
       return this.$router.currentRoute.value.meta.user;
+    },
+    prefersDarkMode() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
   },
   watch: {
@@ -54,6 +64,9 @@ export default {
         this.$router.push({
           name: this.currentUser.roles.includes('guest') ? 'Welcome' : 'ListJobs'
         });
+    },
+    darkMode(val) {
+      document.body.classList.toggle('dark', val);
     }
   },
   methods: {
@@ -65,4 +78,32 @@ export default {
 };
 </script>
 
-<style src="@/styles/app.sass" lang="sass" />
+<style src="@/styles/includes.sass" lang="sass" />
+
+<style lang="sass">
+#app
+  position: relative
+  display: flex
+  flex-direction: column
+  height: 100vh
+  width: 100vw
+  background-color: var(--app-bg)
+
+  > *
+    position: relative
+
+  > .frame-holder
+    flex: 1 1 auto
+
+  > .foot
+    flex: 0 0 auto
+    display: flex
+    width: 100%
+    box-sizing: border-box
+    padding: var(--padding-small)
+    background-color: var(--widget-background-color)
+    border-top: 1px solid var(--input-border-color)
+
+    > label[for="dark-mode"]
+      margin-left: auto
+</style>

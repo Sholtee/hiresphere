@@ -15,25 +15,20 @@
       .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
-    check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
-      .has-icon(data-icon="dark_mode")
+    .controls
+      button.material-icons {{currentUser.isAnonymous ? 'account_circle' : 'login'}}
   .body
     router-view
 </template>
 
 <script>
-import CheckBox from "@/components/widgets/check-box.vue";
-
 export default {
   name: 'Layout',
-  components: {
-    CheckBox
-  },
+
   inject: ['currentUser'],
   data() {
     return {
-      menuVisible: false,
-      darkMode: false
+      menuVisible: false
     };
   },
   computed: {
@@ -49,14 +44,6 @@ export default {
           icon,
           titleId
         }));
-    },
-    prefersDarkMode() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-  },
-  watch: {
-    darkMode(val) {
-      document.body.classList.toggle('dark', val);
     }
   }
 };
@@ -74,7 +61,7 @@ export default {
   --icon-size-large: 7rem
   --no-border: 0 solid transparent
 
-  position: relative
+  position: absolute
   display: flex
   flex-flow: column
   width: 100%
@@ -114,10 +101,18 @@ export default {
       font-size: 1.5rem
       color: var(--font-color-highlighted)
 
-    > .switch
+    > .controls
       @extend .vertically-centered
 
+      display: flex
+      flex-flow: row
       right: var(--padding-normal)
+
+      > *:not(:last-child)
+        margin-right: var(--margin-normal)
+
+      > .material-icons
+        font-size: var(--icon-size-default)
 
     .title
       width: max-content
@@ -136,7 +131,7 @@ export default {
       > .title
         @extend .vertically-centered
 
-        left: var(--margin-normal)
+        left: var(--padding-normal)
 
         &:before
           color: var(--app-icon-color)

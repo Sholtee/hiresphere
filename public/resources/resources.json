@@ -1,18 +1,20 @@
 {
   "language": {
+    "ADDRESS": "Address",
     "APP_TITLE": "HireSphere portal",
     "APP_TITLE_SHORT": "HireSphere",
     "APPLY": "Apply for this job",
     "BACK": "Back",
+    "CONTACT": "Contact",
+    "LOGIN_USERNAME": "Username",
+    "LOGIN_PASSWORD": "Password",
     "MORE_DETAILS": "More details",
     "SEARCH": "Search",
     "SEARCH_JOB_OR_COMPANY": "Job or company...",
     "SEARCH_LOCATION": "Location...",
-    "ADDRESS": "Address",
-    "CONTACT": "Contact",
     "TITLE_HOME": "Home",
     "TITLE_JOBS": "Jobs",
-    "TITLE_LOGIN": "For Employers"
+    "TITLE_LOGIN": "Login"
   },
   "DATE_FMT": "MMM DD."
 }

@@ -46,11 +46,7 @@ const routes = [
         name: 'Login',
         component: () => import('@/components/views/login.vue'),
         meta: {
-          requiredRoles: ['guest'],
-          nav: {
-            titleId: 'TITLE_LOGIN',
-            icon: 'login'
-          }
+          requiredRoles: ['guest']
         }
       }
     ]
@@ -70,7 +66,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   let user = localStorage.getItem('user');
   user = user ? JSON.parse(user) : {
-    roles: ['guest']
+    roles: ['guest'],
+    isAnonymous: true
   };
 
   to.meta.user = user;
