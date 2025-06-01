@@ -37,9 +37,9 @@
     "node": ">=v22.12.0"
   },
   "scripts": {
-    "preinstall": "cd \"./scripts/fake-api\" && npm install",
+    "preinstall": "cd \"./fake-api\" && npm install",
     "postinstall": "npx update-browserslist-db@latest",
-    "fakeapi": "npm --prefix \"./scripts/fake-api\" run start",
+    "fakeapi": "npm --prefix \"./fake-api\" run start",
     "start-servers": "start-server-and-test fakeapi http://localhost:1986/api/v1/ vite",
     "serve": "npm run lint & npm run start-servers",
     "start-servers:preview": "start-server-and-test fakeapi http://localhost:1986/api/v1/ \"vite preview\"",

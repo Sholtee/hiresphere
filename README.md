@@ -14,13 +14,13 @@ root
 │
 └───docs [related documents]
 │
+└───fake-api [Fake-API implementation]
+│
 └───public [static assets that are served as-is (not processed by Vite)]
 │   │
 │   └───resources [i18n]
 │
-└───scripts [Vite plugins & Fake-API]
-│   │
-│   └───fake-api
+└───scripts [Vite plugins]
 │
 └───src [sources root]
 │   │
@@ -44,8 +44,8 @@ root
 - `npm install` (this will install the fake API dependencies as well)
 
 ## Adding custom test data
-- delete the `./scripts/fake-api/fakeapi.db` file if exists
-- edit the [test-data.sql](https://github.com/Sholtee/hiresphere/blob/main/scripts/fake-api/test-data.sql)
+- delete the `./fake-api/fakeapi.db` file if exists
+- edit the [test-data.sql](https://github.com/Sholtee/hiresphere/blob/main/fake-api/test-data.sql)
 - start the debug server
 
 ## Running the debug server
