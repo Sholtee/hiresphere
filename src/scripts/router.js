@@ -6,11 +6,22 @@
  */
 import {createRouter, createWebHistory} from 'vue-router';
 
+import api from './api.js';
+
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: () => import('@/components/views/layout.vue'),
+    beforeEnter: (to, from, next) => {
+      // if the user is logged in go to the editor else show the welcome screen
+      if (to.path === '/')
+        return next({
+          name: to.requestor.isAnonymous ? 'Welcome' : 'ListJobs'
+        });
+
+      next();
+    },
     children: [
       {
         path: '/welcome',
@@ -63,17 +74,11 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  let user = localStorage.getItem('user');
-  user = user ? JSON.parse(user) : {
-    roles: ['guest'],
-    isAnonymous: true
-  };
-
-  to.meta.user = user;
+router.beforeEach(async (to, from, next) => {
+  to.requestor = await api.getUser();
 
   // if no "requiredRoles" is defined then every user allowed to visit the route
-  if (to.meta.requiredRoles?.some(role => user.roles.includes(role)) === false)
+  if (to.meta.requiredRoles?.some(role => to.requestor.roles.includes(role)) === false)
     return next({
       name: 'NotFound'
     });

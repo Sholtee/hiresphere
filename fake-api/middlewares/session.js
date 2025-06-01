@@ -12,8 +12,10 @@ const
   SESSION_COOKIE_NAME = 'fake-session';
 
 export default function sessionMiddleware(req, res, next) {
+  req.user = null;
+
   const sessionCookie = req.cookies[SESSION_COOKIE_NAME];
-  if (!sessionCookie) {
+  if (sessionCookie) {
     try {
       req.user = jwt.verify(sessionCookie, PRIVATE_KEY);
     } catch {

@@ -22,7 +22,7 @@ export default {
   components: {
     Job
   },
-  inject: ['api', 'setTitle'],
+  inject: ['setTitle'],
   data() {
     return {
       job: null
@@ -30,7 +30,7 @@ export default {
   },
   async beforeMount() {
     try {
-      const job = await this.api.getJob(this.$route.params.jobId);
+      const job = await this.$api.getJob(this.$route.params.jobId);
 
       this.job = job;
       this.setTitle(job.name);

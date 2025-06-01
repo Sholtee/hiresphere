@@ -17,7 +17,7 @@
         | {{$resources.language[titleId]}}
     .controls
       button.material-icons(v-if="currentUser.isAnonymous" @click="$router.push({name: 'Login'})") account_circle
-      button.material-icons(v-else @lick="apu.logout()") login
+      button.material-icons(v-else @click="logout") login
   .body
     router-view
 </template>
@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'Layout',
-  inject: ['currentUser', 'api'],
+  inject: ['currentUser'],
   data() {
     return {
       menuVisible: false
@@ -44,6 +44,13 @@ export default {
           icon,
           titleId
         }));
+    }
+  },
+  methods: {
+    async logout() {
+      await this.$api.logout();
+      // do not use $router.push() as we want a full reload
+      window.location.href = '/';
     }
   }
 };

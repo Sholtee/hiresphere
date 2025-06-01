@@ -7,11 +7,11 @@
 
 <template lang="pug">
 .login(v-once)
-  input-box(v-model="userName"
+  input-box(v-model="email"
     icon="account_circle" :placeholder="$resources.language.LOGIN_USERNAME" @keyup.enter="login" focus)
   input-box(type="password" v-model="password"
     icon="password" :placeholder="$resources.language.LOGIN_PASSWORD" @keyup.enter="login")
-  button.primary Login
+  button.primary(@click="login") Login
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
   inject: ['setTitle'],
   data() {
     return {
-      userName: '',
+      email: '',
       password: ''
     };
   },
@@ -33,8 +33,21 @@ export default {
     this.setTitle(this.$resources.language.TITLE_LOGIN);
   },
   methods: {
-    login() {
+    async login() {
+      const
+        {email, password} = this,
+        {status, reason} = await this.$api.login({
+          email,
+          password
+        });
 
+      if (status !== 'ok') {
+        this.$toast.error(reason);
+        return;
+      }
+
+      // do not use $router.push() as we want a full reload
+      window.location.href = '/';
     }
   }
 };

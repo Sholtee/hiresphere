@@ -7,8 +7,20 @@
     "method": "POST",
     "path": "/api/v1/jobs"
   },
+  "login": {
+    "method": "POST",
+    "path": "/api/v1/login"
+  },
+  "logout": {
+    "method": "GET",
+    "path": "/api/v1/logout"
+  },
   "getJob": {
     "method": "GET",
     "path": "/api/v1/job"
+  },
+  "getUser": {
+    "method": "GET",
+    "path": "/api/v1/getuser"
   }
 }

@@ -31,7 +31,7 @@ export default {
     InfiniteScroll,
     Job
   },
-  inject: ['api', 'setTitle'],
+  inject: ['setTitle'],
   setup() {
     // data that don't need to be reactive
     return {
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     async nextPage() {
-      const fetchedPage = await this.api.listJobs(this.searchParams);
+      const fetchedPage = await this.$api.listJobs(this.searchParams);
       if (!fetchedPage.length)
         return false;
 

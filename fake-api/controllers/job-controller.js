@@ -10,7 +10,8 @@ import {db} from '../services/db.js';
 export const jobController = express.Router();
 
 jobController.get('/job/:jobId', (req, res) => {
-  const {user: {id: userId} = {}, params: {jobId}} = req;
+  // "user" cannot be destructured as it is never undefined
+  const {user, params: {jobId}} = req;
 
   let
     params = {
@@ -19,11 +20,11 @@ jobController.get('/job/:jobId', (req, res) => {
     queryExtension = 'WHERE j.id = @jobId';
 
   // when an employer is logged in, return its own jobs only
-  if (typeof userId === 'number') {
+  if (typeof user?.id === 'number') {
     queryExtension += ' AND j.user_id = @userId';
     params = {
       ...params,
-      userId
+      userId: user.id
     };
   }
 
@@ -40,7 +41,7 @@ jobController.get('/job/:jobId', (req, res) => {
 });
 
 jobController.post('/jobs', (req, res) => {
-  const {user: {id: userId} = {}} = req;
+  const userId = req.user?.id;
 
   let
     {page = 0, jobOrCompany = '', location = ''} = req.body,

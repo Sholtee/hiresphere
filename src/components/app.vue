@@ -8,7 +8,7 @@
 <template lang="pug">
 teleport(to="head")
   title {{title}}
-loader(:visible="loaderVisible")
+loader(:visible="$api.busy")
 .frame-holder
   router-view
 .foot
@@ -17,9 +17,8 @@ loader(:visible="loaderVisible")
 </template>
 
 <script>
-import {computed} from 'vue';
+import {computed} from "vue";
 
-import Api from '@/scripts/api.js';
 import CheckBox from "@/components/widgets/check-box.vue";
 import Loader from "@/components/widgets/loader.vue";
 
@@ -30,15 +29,9 @@ export default {
     Loader
   },
   provide() {
-    const api = new Api();
-    api.addEventListener('load', () => this.loaderVisible++);
-    api.addEventListener('end-load', () => this.loaderVisible--);
-    api.addEventListener('error', ({detail: {error}}) => this.$toast.error(error.toString()));
-
     return {
-      currentUser: computed(() => this.currentUser),
-      setTitle: title => this.setTitle(title),
-      api
+      currentUser: computed(() => this.$router.currentRoute.value.requestor),
+      setTitle: title => this.setTitle(title)
     };
   },
   data() {
@@ -50,24 +43,17 @@ export default {
     };
   },
   computed: {
-    currentUser() {
-      return this.$router.currentRoute.value.meta.user;
-    },
     prefersDarkMode() {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
   },
   watch: {
-    $route(to) {
-      if (to.path === '/')
-        // if the user is logged in go to the editor else show the welcome screen
-        this.$router.push({
-          name: this.currentUser.roles.includes('guest') ? 'Welcome' : 'ListJobs'
-        });
-    },
     darkMode(val) {
       document.body.classList.toggle('dark', val);
     }
+  },
+  beforeCreate() {
+    this.$api.addEventListener('error', ({detail: {error}}) => this.$toast.error(error.toString()));
   },
   methods: {
     setTitle(title) {

@@ -5,8 +5,16 @@
  * Author: Denes Solti
  */
 import apiDefinition from '@/api.json' with {type: 'json'};
+import {ref} from "vue";
 
-export default class Api extends EventTarget {
+class Api extends EventTarget {
+  // requests might be sent parallely (do not use boolean)
+  #activeRequests = ref(0);
+
+  get busy() {
+    return this.#activeRequests > 0;
+  }
+
   constructor() {
     super();
 
@@ -48,13 +56,15 @@ export default class Api extends EventTarget {
   }
 
   async #fetchWrapper(...args) {
-    this.dispatchEvent(new CustomEvent('load', {}));
+    this.#activeRequests.value++;
     try {
       const resp = await fetch(...args);
       if (!resp.ok)
         throw `Unable to fetch the response: "${resp.statusText}"`;
 
-      return await resp.json();
+      return await (resp.headers.get('content-type')?.includes('application/json')
+        ? resp.json()
+        : resp.text());
     } catch (error) {
       this.dispatchEvent(new CustomEvent('error', {
         detail: {
@@ -63,7 +73,10 @@ export default class Api extends EventTarget {
       }));
       throw error;
     } finally {
-      this.dispatchEvent(new CustomEvent('end-load', {}));
+      this.#activeRequests.value--;
     }
   }
 }
+
+const api = new Api();
+export default api;

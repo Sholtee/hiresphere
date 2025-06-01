@@ -15,7 +15,7 @@ export default {
   name: 'Loader',
   props: {
     visible: {
-      type: Number,
+      type: Boolean,
       required: true
     }
   }
