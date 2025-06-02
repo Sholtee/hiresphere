@@ -5,6 +5,7 @@
  * Author: Denes Solti
  */
 import {resolve} from 'path';
+import {spawnSync} from 'child_process';
 
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import {defineConfig} from 'vite';
@@ -16,7 +17,13 @@ export default defineConfig(({mode}) => ({
   plugins: [
     vue(),
     pugPlugin({
-      index: '@/index.pug'
+      index: '@/index.pug',
+      data: {
+        VERSION: spawnSync('git', ['rev-parse', '--short', 'HEAD'])
+          .stdout
+          .toString()
+          .trim()
+      }
     })
   ],
   build: {
