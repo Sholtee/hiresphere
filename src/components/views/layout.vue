@@ -10,9 +10,9 @@
   .head
     .click-trap(@click="menuVisible = false" v-if="menuVisible")
     button.material-icons.hamburger(@click="menuVisible = !menuVisible" ref="hamburger") menu
-    .title.title-low-width(v-once) {{$resources.language.APP_TITLE}}
-    .details(:class="{visible: menuVisible}" ref="details")
-      .title.has-icon(data-icon="domain" v-once) {{$resources.language.APP_TITLE}}
+    .title(v-once) {{$resources.language.APP_TITLE}}
+    .nav-holder(:class="{visible: menuVisible}" ref="details")
+      .material-icons.app-icon domain
       router-link.nav.has-icon(v-for="{name, titleId, icon} in routes" :to="{name}" :data-icon="icon")
         | {{$resources.language[titleId]}}
     .controls
@@ -121,29 +121,26 @@ export default {
       > .material-icons
         font-size: var(--icon-size-default)
 
-    .title
+    > .title
+      @extend .vertically-centered
+
       width: max-content
       font-size: 1.5rem
       color: var(--font-color-disabled)
+      left: 4rem
 
-    > .title-low-width
-      display: none
-
-    > .details
+    > .nav-holder
       position: relative
       display: flex
       flex-flow: row
       height: 100%
 
-      > .title
+      > .app-icon
         @extend .vertically-centered
 
         left: var(--padding-normal)
-
-        &:before
-          color: var(--app-icon-color)
-          font-size: var(--icon-size-default)
-          margin-right: var(--margin-normal)
+        color: var(--app-icon-color)
+        font-size: var(--icon-size-default)
 
       > .nav
         height: 100%
@@ -177,14 +174,11 @@ export default {
       > .hamburger
         display: block
 
-      > .title-low-width
-        position: absolute
-        display: block
+      > .title
         left: 50%
-        top: 50%
         transform: translate(-50%, -50%)
 
-      > .details
+      > .nav-holder
         position: fixed
         left: 0
         top: 0
@@ -201,7 +195,7 @@ export default {
         &.visible
           transform: translateX(0)
 
-        > .title
+        > .app-icon
           position: relative
           transform: unset
           top: 0
@@ -209,11 +203,7 @@ export default {
           height: var(--icon-size-large)
           width: var(--icon-size-large)
           margin: var(--margin-normal) auto var(--margin-large)
-          overflow: hidden
-
-          &:before
-            font-size: var(--icon-size-large)
-            margin-right: 0
+          font-size: var(--icon-size-large)
 
         > .nav
           height: max-content
