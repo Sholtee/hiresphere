@@ -37,7 +37,7 @@ export default {
         .$router
         .getRoutes()
         .filter(({meta: {nav, requiredRoles}}) =>
-          // if requiredRoles is null the every user can visit the view
+          // if requiredRoles is null then every user can visit the view
           nav && requiredRoles?.some(role => this.currentUser.roles.includes(role)) !== false)
         .map(({name, meta: {nav: {icon, titleId}}}) => ({
           name,

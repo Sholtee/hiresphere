@@ -13,6 +13,7 @@ toast(ref="toast")
 .frame-holder
   router-view
 .foot
+  .version(v-once) {{version}}
   check-box(id="dark-mode" @change="darkMode = $event" :initial-value="prefersDarkMode")
     .has-icon(data-icon="dark_mode")
 </template>
@@ -47,6 +48,9 @@ export default {
   computed: {
     prefersDarkMode() {
       return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    },
+    version() {
+      return window.document.querySelector('meta[name="commit-hash"]')?.content;
     }
   },
   watch: {
@@ -97,6 +101,10 @@ export default {
     padding: var(--padding-small)
     background-color: var(--widget-background-color)
     border-top: 1px solid var(--input-border-color)
+
+    > .version
+      margin-right: auto
+      color: var(--font-color-disabled)
 
     > label[for="dark-mode"]
       margin-left: auto
