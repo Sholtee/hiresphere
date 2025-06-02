@@ -16,7 +16,8 @@ export default function pugPlugin({index, options, data} = {}) {
     configResolved(resolvedConfig) {
       alias = resolvedConfig.resolve.alias.reduce(
         (accu, {find, replacement}) => (typeof find !== 'string' ? accu : ({
-          ...accu, [find]: replacement
+          ...accu,
+          [find]: replacement
         })),
         {}
       );
@@ -24,7 +25,8 @@ export default function pugPlugin({index, options, data} = {}) {
     configureServer(server) {
       return () => {
         server.middlewares.use(async (req, res, next) => {
-          if (!/^\/(?:index\.html)?$/.test(req.url)) return next();
+          if (!/^\/(?:index\.html)?$/.test(req.url))
+            return next();
 
           res.end(
             await server.transformIndexHtml?.(
