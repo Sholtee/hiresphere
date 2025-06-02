@@ -66,6 +66,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@use "@/styles/mixins" as *
+
 .job
   --holder-width: 30rem
 
@@ -95,14 +97,14 @@ export default {
 
       > span
         grid-column: 2
-        display: flex
-        align-items: center
         overflow: hidden
         white-space: nowrap
         text-overflow: ellipsis
+        max-width: 90%
 
         &.job-title
           grid-row: 1
+          align-self: center
           font-weight: bold
           font-size: var(--font-size-large)
           color: var(--font-color-highlighted)
@@ -120,7 +122,7 @@ export default {
       > .tags
         grid-row: 4
         display: flex
-        overflow-y: auto
+        overflow-x: auto
         gap: var(--margin-small)
 
         > .tag
@@ -132,8 +134,9 @@ export default {
           font-weight: bold
           font-size: var(--font-size-small)
           color: var(--font-color-highlighted)
+          white-space: nowrap
 
-      @media (max-width: 50rem)
+      +media-max-width-55
         display: flex
         flex-flow: column
         height: max-content
@@ -147,6 +150,9 @@ export default {
         > img, > span
           margin-left: auto
           margin-right: auto
+
+        > span
+          white-space: break-spaces
 
         > img
           height: var(--img-size)
