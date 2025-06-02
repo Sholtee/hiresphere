@@ -57,7 +57,7 @@ loginController.get('/getuser', (req, res) => {
     }));
   }
 
-  res.send(JSON.stringify(req.user || {
+  res.send(JSON.stringify({
     roles: ['guest'],
     isAnonymous: true
   }));
