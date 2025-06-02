@@ -1,10 +1,11 @@
-/****************************************************
+/*
  * File: pug-plugin.js
  * Project: HireSphere
  *
  * Author: Denes Solti
- *****************************************************/
+ */
 import {compileFile} from 'pug';
+import {cwd} from 'node:process';
 import {join} from 'path';
 
 export default function pugPlugin({index, options, data} = {}) {
@@ -39,7 +40,7 @@ export default function pugPlugin({index, options, data} = {}) {
       return id;
     },
     load(id) {
-      return id === join(process.cwd(), 'index.html')
+      return id === join(cwd(), 'index.html')
         ? compilePugFile(index)
         : null;
     }
@@ -47,7 +48,8 @@ export default function pugPlugin({index, options, data} = {}) {
 
   function compilePugFile(pugFile) {
     const root = alias[pugFile.charAt(0)];
-    if (root) pugFile = join(root, pugFile.slice(1));
+    if (root)
+      pugFile = join(root, pugFile.slice(1));
     return compileFile(pugFile, options)(data);
   }
 }
