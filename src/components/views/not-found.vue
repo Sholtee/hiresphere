@@ -5,7 +5,7 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-.img-holder
+.card.img-holder
   img(src="@/assets/grumpy.png")
 </template>
 
@@ -17,20 +17,15 @@ export default {
 
 <style lang="sass" scoped>
 .img-holder
-  position: relative
-  display: flex
-  flex-flow: column
-  margin: auto
   align-items: center
   justify-content: center
   width: 90%
   height: 90%
   max-width: 30rem
   max-height: 25rem
-  background: var(--widget-background-color)
-  border-radius: var(--border-radius-large)
-  box-shadow: var(--default-box-shadow)
-  padding: var(--padding-normal)
+  left: 50%
+  top: 20%
+  transform: translateX(-50%)
 
   &:after
     content: "404"
@@ -43,12 +38,4 @@ export default {
     max-height: calc(100% - 2rem)
     width: auto
     height: auto
-
-  @media (max-width: 20rem)
-    &:after
-      display: none
-
-  @media (max-height: 20rem)
-    &:after
-      display: none
 </style>
