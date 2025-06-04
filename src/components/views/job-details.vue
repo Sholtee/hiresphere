@@ -11,7 +11,8 @@
   job(v-if="job" :job="job" expanded)
     template(v-slot:buttons)
       button.secondary(@click="$router.go(-1)") {{$resources.language.BACK}}
-      button.primary(@click="console.log('applied')") {{$resources.language.APPLY}}
+      button.primary(@click="console.log('applied')" v-if="currentUser.isAnonymous") {{$resources.language.APPLY}}
+      button.has-icon.primary(data-icon="edit" @click="console.log('edited')") {{$resources.language.EDIT}}
 </template>
 
 <script>
@@ -22,7 +23,7 @@ export default {
   components: {
     Job
   },
-  inject: ['setTitle'],
+  inject: ['currentUser', 'setTitle'],
   data() {
     return {
       job: null
