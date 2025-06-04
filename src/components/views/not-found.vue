@@ -5,7 +5,7 @@
    Author: Denes Solti
 -->
 <template lang="pug">
-.card.img-holder
+.card.not-found
   img(src="@/assets/grumpy.png")
 </template>
 
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.img-holder
+.not-found
   align-items: center
   justify-content: center
   width: 90%
